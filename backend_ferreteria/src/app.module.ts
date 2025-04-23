@@ -4,11 +4,10 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { VentasModule } from './ventas/ventas.module';
-import { VentasDetallesModule } from './ventas_detalles/ventas_detalles.module';
 import { UsuariosModule } from './usuarios/usuarios.module';
 import { EmpleadosModule } from './empleados/empleados.module';
-import { VentaDetalleModule } from './venta_detalle/venta_detalle.module';
 import { ProductosModule } from './productos/productos.module';
+import { VentasDetallesModule } from './ventas_detalles/ventas_detalles.module';
 
 @Module({
   imports: [
@@ -25,11 +24,10 @@ import { ProductosModule } from './productos/productos.module';
       autoLoadEntities: true,
     }),
     VentasModule,
-    VentasDetallesModule,
     UsuariosModule,
     EmpleadosModule,
-    VentaDetalleModule,
     ProductosModule,
+    VentasDetallesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
