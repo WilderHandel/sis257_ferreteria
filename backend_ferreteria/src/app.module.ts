@@ -8,6 +8,7 @@ import { VentasDetallesModule } from './ventas_detalles/ventas_detalles.module';
 import { UsuariosModule } from './usuarios/usuarios.module';
 import { EmpleadosModule } from './empleados/empleados.module';
 import { VentaDetalleModule } from './venta_detalle/venta_detalle.module';
+import { ProductosModule } from './productos/productos.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { VentaDetalleModule } from './venta_detalle/venta_detalle.module';
     UsuariosModule,
     EmpleadosModule,
     VentaDetalleModule,
+    ProductosModule,
   ],
   controllers: [AppController],
   providers: [AppService],
