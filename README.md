@@ -7,7 +7,7 @@ La Ferretería Bicentenario es una empresa ubicada en la ciudad de Sucre, Bolivi
 
 2. Entidades y Campos Tentativos
 
-1. producto
+1. productos
 - id
 - codigo
 - descripcion
@@ -23,7 +23,7 @@ La Ferretería Bicentenario es una empresa ubicada en la ciudad de Sucre, Bolivi
 
 ---
 
-2. categoria
+2. categorias
 - id
 - nombre
 - descripcion
@@ -34,7 +34,7 @@ La Ferretería Bicentenario es una empresa ubicada en la ciudad de Sucre, Bolivi
 
 ---
 
-3. proveedor
+3. proveedores
 - id
 - nit
 - razon_social
@@ -48,7 +48,7 @@ La Ferretería Bicentenario es una empresa ubicada en la ciudad de Sucre, Bolivi
 
 ---
 
-4. cliente
+4. clientes
 - id
 - nombre
 - ci_nit
@@ -59,7 +59,7 @@ La Ferretería Bicentenario es una empresa ubicada en la ciudad de Sucre, Bolivi
 
 ---
 
-5. venta
+5. ventas
 - id
 - fecha
 - id_cliente
@@ -72,7 +72,7 @@ La Ferretería Bicentenario es una empresa ubicada en la ciudad de Sucre, Bolivi
 
 ---
 
-6. detalle_venta
+6. ventas_detalles
 - id
 - id_venta
 - id_producto
@@ -86,7 +86,7 @@ La Ferretería Bicentenario es una empresa ubicada en la ciudad de Sucre, Bolivi
 
 ---
 
-7. usuario
+7. usuarios
 - id
 - usuario
 - contraseña
@@ -98,7 +98,7 @@ La Ferretería Bicentenario es una empresa ubicada en la ciudad de Sucre, Bolivi
 
 ---
 
-8. empleado
+8. empleados
 - id
 - ci
 - nombre
