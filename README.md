@@ -1,11 +1,11 @@
 # sis257_ferreteria
-1. Descripción del proyecto
+Descripción del proyecto
 
-Este proyecto tiene como objetivo diseñar la estructura inicial de una base de datos para la *Ferretería Bicentenario*, un negocio dedicado a la venta de materiales de construcción, herramientas, pinturas y artículos ferreteros en general.
+Este proyecto tiene como objetivo desarrollar una aplicación wed para la *Ferretería Bicentenario*, un negocio dedicado a la venta de materiales de construcción, herramientas, pinturas y artículos ferreteros en general.
 
 La Ferretería Bicentenario es una empresa ubicada en la ciudad de Sucre, Bolivia. Su principal actividad es la comercialización de artículos de ferretería al por menor. El sistema de base de datos propuesto busca facilitar la gestión de productos, ventas, proveedores y clientes de forma eficiente y ordenada.
 
-2. Entidades y Campos Tentativos
+Entidades
 
 1. productos
 - id
