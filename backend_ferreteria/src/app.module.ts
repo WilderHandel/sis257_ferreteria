@@ -8,6 +8,9 @@ import { UsuariosModule } from './usuarios/usuarios.module';
 import { EmpleadosModule } from './empleados/empleados.module';
 import { ProductosModule } from './productos/productos.module';
 import { VentasDetallesModule } from './ventas_detalles/ventas_detalles.module';
+import { CategoriasModule } from './categorias/categorias.module';
+import { ClientesModule } from './clientes/clientes.module';
+import { ProveedoresModule } from './proveedores/proveedores.module';
 
 @Module({
   imports: [
@@ -28,6 +31,9 @@ import { VentasDetallesModule } from './ventas_detalles/ventas_detalles.module';
     EmpleadosModule,
     ProductosModule,
     VentasDetallesModule,
+    CategoriasModule,
+    ClientesModule,
+    ProveedoresModule,
   ],
   controllers: [AppController],
   providers: [AppService],
