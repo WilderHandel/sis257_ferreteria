@@ -9,6 +9,7 @@ export class CreateClienteDto {
     message: 'El campo nombre no debe ser mayor a 150 caracteres',
   })
   readonly nombre: string;
+
   @ApiProperty()
   @IsNotEmpty({ message: 'El campo Ci/Nit no debe ser vacío' })
   @IsString({ message: 'El campo Ci/Nit debe ser de tipo cadena' })

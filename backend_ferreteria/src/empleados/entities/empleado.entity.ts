@@ -31,7 +31,7 @@ export class Empleado {
   celular: string;
 
   @Column('varchar', { length: 50 })
-  carga: string;
+  cargo: string;
 
   @CreateDateColumn({ name: 'fecha_creacion' })
   fechaCreacion: Date;

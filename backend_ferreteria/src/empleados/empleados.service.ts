@@ -24,7 +24,7 @@ export class EmpleadosService {
       apellidoMaterno: CreateEmpleadoDto.apellidoMaterno.trim(),
       direccion: CreateEmpleadoDto.direccion.trim(),
       celular: CreateEmpleadoDto.celular.trim(),
-      carga: CreateEmpleadoDto.carga.trim(),
+      cargo: CreateEmpleadoDto.cargo.trim(),
     });
 
     if (existe) throw new ConflictException('La Empleado ya existe');
@@ -36,7 +36,7 @@ export class EmpleadosService {
     empleado.apellidoMaterno = CreateEmpleadoDto.apellidoMaterno.trim();
     empleado.direccion = CreateEmpleadoDto.direccion.trim();
     empleado.celular = CreateEmpleadoDto.celular.trim();
-    empleado.carga = CreateEmpleadoDto.carga.trim();
+    empleado.cargo = CreateEmpleadoDto.cargo.trim();
     return this.empleadosRepository.save(empleado);
   }
 

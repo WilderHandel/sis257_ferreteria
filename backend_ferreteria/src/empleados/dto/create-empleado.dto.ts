@@ -49,10 +49,10 @@ export class CreateEmpleadoDto {
   readonly celular: string;
 
   @ApiProperty()
-  @IsNotEmpty({ message: 'El campo carga no debe ser vacío' })
-  @IsString({ message: 'El campo carga debe ser de tipo cadena' })
+  @IsNotEmpty({ message: 'El campo cargo no debe ser vacío' })
+  @IsString({ message: 'El campo cargo debe ser de tipo cadena' })
   @MaxLength(50, {
-    message: 'El campo carga no debe ser mayor a 12 caracteres',
+    message: 'El campo cargo no debe ser mayor a 12 caracteres',
   })
-  readonly carga: string;
+  readonly cargo: string;
 }
