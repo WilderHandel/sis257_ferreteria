@@ -17,7 +17,6 @@ export class CreateEmpleadoDto {
   readonly nombre: string;
 
   @ApiProperty()
-  @IsNotEmpty({ message: 'El campo paterno es obligatorio' })
   @IsString({ message: 'El campo paterno debe ser de tipo cadena' })
   @MaxLength(50, {
     message: 'El paterno nombre no debe ser mayor a 50 caracteres',
@@ -25,7 +24,6 @@ export class CreateEmpleadoDto {
   readonly apellidoPaterno: string;
 
   @ApiProperty()
-  @IsNotEmpty({ message: 'El campo materno es obligatorio' })
   @IsString({ message: 'El campo materno debe ser de tipo cadena' })
   @MaxLength(50, {
     message: 'El campo materno no debe ser mayor a 50 caracteres',
