@@ -30,7 +30,7 @@ export class Producto {
   @Column('varchar')
   descripcion: string;
 
-  @Column('decimal', { precision: 10, scale: 2 })
+  @Column('decimal', { name: 'precio_venta' })
   precioVenta: number;
 
   @Column('int')

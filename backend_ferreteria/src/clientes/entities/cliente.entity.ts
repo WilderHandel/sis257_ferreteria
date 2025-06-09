@@ -17,7 +17,7 @@ export class Cliente {
   @Column('varchar', { length: 150 })
   nombre: string;
 
-  @Column('varchar', { length: 12 })
+  @Column('varchar', { length: 12, name: 'ci_nit' })
   ciNit: string;
 
   @CreateDateColumn({ name: 'fecha_creacion' })
