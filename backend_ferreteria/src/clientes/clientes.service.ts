@@ -22,7 +22,7 @@ export class ClientesService {
       ciNit: CreateClienteDto.ciNit.trim(),
     });
 
-    if (existe) throw new ConflictException('La Cliente ya existe');
+    if (existe) throw new ConflictException('El Cliente ya existe');
 
     const cliente = new Cliente();
     cliente.nombre = CreateClienteDto.nombre.trim();
