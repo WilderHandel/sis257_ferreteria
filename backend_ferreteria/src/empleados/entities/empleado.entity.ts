@@ -20,10 +20,10 @@ export class Empleado {
   @Column('varchar', { length: 50 })
   nombre: string;
 
-  @Column('varchar', { length: 50, name: 'apellido_paterno' })
+  @Column('varchar', { length: 50, name: 'apellido_paterno', nullable: true })
   apellidoPaterno: string;
 
-  @Column('varchar', { length: 50, name: 'apellido_materno' })
+  @Column('varchar', { length: 50, name: 'apellido_materno', nullable: true })
   apellidoMaterno: string;
 
   @Column('varchar', { length: 60 })

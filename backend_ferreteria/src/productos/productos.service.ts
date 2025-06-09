@@ -55,7 +55,7 @@ export class ProductosService {
         unidadMedida: true,
         fotografia: true,
         categoria: { id: true, nombre: true },
-        proveedor: { id: true, ciNit: true, RazonSocial: true },
+        proveedor: { id: true, ciNit: true, razonSocial: true },
       },
     });
   }

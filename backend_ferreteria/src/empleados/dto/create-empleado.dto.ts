@@ -17,16 +17,16 @@ export class CreateEmpleadoDto {
   readonly nombre: string;
 
   @ApiProperty()
-  @IsString({ message: 'El campo paterno debe ser de tipo cadena' })
+  @IsString({ message: 'El apellido paterno debe ser de tipo cadena' })
   @MaxLength(50, {
-    message: 'El paterno nombre no debe ser mayor a 50 caracteres',
+    message: 'El apellido paterno  no debe ser mayor a 50 caracteres',
   })
   readonly apellidoPaterno: string;
 
   @ApiProperty()
-  @IsString({ message: 'El campo materno debe ser de tipo cadena' })
+  @IsString({ message: 'El apellido materno debe ser de tipo cadena' })
   @MaxLength(50, {
-    message: 'El campo materno no debe ser mayor a 50 caracteres',
+    message: 'El apellido materno no debe ser mayor a 50 caracteres',
   })
   readonly apellidoMaterno: string;
 
