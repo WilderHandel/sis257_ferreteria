@@ -39,6 +39,9 @@ export class Producto {
   @Column('varchar', { name: 'unidad_medida' })
   unidadMedida: string;
 
+  @Column('varchar', { nullable: true })
+  fotografia: string;
+
   @CreateDateColumn({ name: 'fecha_creacion' })
   fechaCreacion: Date;
 

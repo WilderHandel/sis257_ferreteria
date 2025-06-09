@@ -47,4 +47,8 @@ export class CreateProductoDto {
   @IsNotEmpty({ message: 'El campo unidad de medida no debe ser vacío' })
   @IsString({ message: 'El campo unidad de medida debe ser de tipo cadena' })
   readonly unidadMedida: string;
+
+  @IsNotEmpty({ message: 'El campo fotografia no debe ser vacío' })
+  @IsString({ message: 'El campo fotografia debe ser de tipo cadena' })
+  readonly fotografia: string;
 }

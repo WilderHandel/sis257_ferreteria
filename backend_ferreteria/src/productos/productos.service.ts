@@ -25,6 +25,7 @@ export class ProductosService {
       precioVenta: createProductoDto.precioVenta,
       saldo: createProductoDto.saldo,
       unidadMedida: createProductoDto.unidadMedida.trim(),
+      fotografia: createProductoDto.fotografia.trim(),
     });
 
     if (existe) throw new ConflictException('El Producto ya existe');
@@ -37,6 +38,7 @@ export class ProductosService {
     producto.precioVenta = createProductoDto.precioVenta;
     producto.saldo = createProductoDto.saldo;
     producto.unidadMedida = createProductoDto.unidadMedida.trim();
+    producto.fotografia = createProductoDto.fotografia.trim();
 
     return this.productosRepository.save(producto);
   }
@@ -51,6 +53,7 @@ export class ProductosService {
         precioVenta: true,
         saldo: true,
         unidadMedida: true,
+        fotografia: true,
         categoria: { id: true, nombre: true },
         proveedor: { id: true, ciNit: true, RazonSocial: true },
       },
