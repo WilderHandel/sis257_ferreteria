@@ -17,22 +17,22 @@ export class VentasDetallesService {
   ) {}
 
   async create(
-    CreateVentaDetalleDto: CreateVentaDetalleDto,
+    createVentaDetalleDto: CreateVentaDetalleDto,
   ): Promise<VentaDetalle> {
     const existe = await this.ventasRepository.findOneBy({
-      idVenta: CreateVentaDetalleDto.idVenta,
-      idProducto: CreateVentaDetalleDto.idProducto,
-      precioUnitario: CreateVentaDetalleDto.precioUnitario,
-      total: CreateVentaDetalleDto.total,
+      idVenta: createVentaDetalleDto.idVenta,
+      idProducto: createVentaDetalleDto.idProducto,
+      precioUnitario: createVentaDetalleDto.precioUnitario,
+      total: createVentaDetalleDto.total,
     });
 
-    if (existe) throw new ConflictException('El det ya existe');
+    if (existe) throw new ConflictException('El detalle de la venta ya existe');
 
     const ventaDetalle = new VentaDetalle();
-    ventaDetalle.idVenta = CreateVentaDetalleDto.idVenta;
-    ventaDetalle.idProducto = CreateVentaDetalleDto.idProducto;
-    ventaDetalle.precioUnitario = CreateVentaDetalleDto.precioUnitario;
-    ventaDetalle.total = CreateVentaDetalleDto.total;
+    ventaDetalle.idVenta = createVentaDetalleDto.idVenta;
+    ventaDetalle.idProducto = createVentaDetalleDto.idProducto;
+    ventaDetalle.precioUnitario = createVentaDetalleDto.precioUnitario;
+    ventaDetalle.total = createVentaDetalleDto.total;
     return this.ventasRepository.save(ventaDetalle);
   }
 
