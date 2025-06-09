@@ -1,7 +1,9 @@
+import { VentaDetalle } from 'src/ventas_detalles/entities/venta_detalle.entity';
 import {
   Column,
   CreateDateColumn,
   DeleteDateColumn,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -36,4 +38,7 @@ export class Producto {
 
   @DeleteDateColumn({ name: 'fecha_eliminacion' })
   fechaEliminacion: Date;
+
+  @OneToMany(() => VentaDetalle, (ventaDetalle) => ventaDetalle.producto)
+  VentaDetalles: VentaDetalle[];
 }
