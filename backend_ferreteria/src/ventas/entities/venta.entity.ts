@@ -48,5 +48,5 @@ export class Venta {
   usuario: Usuario;
 
   @OneToMany(() => VentaDetalle, (ventaDetalle) => ventaDetalle.venta)
-  VentaDetalles: VentaDetalle[];
+  ventasDetalles: VentaDetalle[];
 }

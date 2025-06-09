@@ -20,9 +20,6 @@ export class Cliente {
   @Column('varchar', { length: 12 })
   ciNit: string;
 
-  @Column('varchar', { name: 'usuario_registro' })
-  usuarioRegistro: string;
-
   @CreateDateColumn({ name: 'fecha_creacion' })
   fechaCreacion: Date;
 

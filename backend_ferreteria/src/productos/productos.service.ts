@@ -25,7 +25,7 @@ export class ProductosService {
       unidadMedida: createProductoDto.unidadMedida.trim(),
     });
 
-    if (existe) throw new ConflictException('La Producto ya existe');
+    if (existe) throw new ConflictException('El Producto ya existe');
 
     const producto = new Producto();
     producto.codigo = createProductoDto.codigo.trim();
@@ -43,7 +43,7 @@ export class ProductosService {
 
   async findOne(id: number): Promise<Producto> {
     const productos = await this.productosRepository.findOneBy({ id });
-    if (!productos) throw new NotFoundException('La Producto no existe');
+    if (!productos) throw new NotFoundException('El Producto no existe');
     return productos;
   }
 

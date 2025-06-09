@@ -3,11 +3,13 @@ import {
   Column,
   CreateDateColumn,
   DeleteDateColumn,
+  Entity,
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
+@Entity('productos')
 export class Producto {
   @PrimaryGeneratedColumn('identity')
   id: number;
@@ -27,9 +29,6 @@ export class Producto {
   @Column('varchar', { name: 'unidad_medida' })
   unidadMedida: string;
 
-  @Column('varchar', { name: 'usuario_registro' })
-  usuarioRegistro: string;
-
   @CreateDateColumn({ name: 'fecha_creacion' })
   fechaCreacion: Date;
 
@@ -40,5 +39,5 @@ export class Producto {
   fechaEliminacion: Date;
 
   @OneToMany(() => VentaDetalle, (ventaDetalle) => ventaDetalle.producto)
-  VentaDetalles: VentaDetalle[];
+  ventasDetalles: VentaDetalle[];
 }
