@@ -19,7 +19,7 @@ export class ProveedoresService {
   async create(createProveedorDto: CreateProveedorDto): Promise<Proveedor> {
     const existe = await this.proveedoresRepository.findOneBy({
       ciNit: createProveedorDto.ciNit,
-      RazonSocial: createProveedorDto.RazonSocial.trim(),
+      razonSocial: createProveedorDto.razonSocial.trim(),
       telefono: createProveedorDto.telefono,
       direccion: createProveedorDto.direccion.trim(),
       representante: createProveedorDto.representante.trim(),
@@ -28,7 +28,7 @@ export class ProveedoresService {
 
     const proveedor = new Proveedor();
     proveedor.ciNit = createProveedorDto.ciNit;
-    proveedor.RazonSocial = createProveedorDto.RazonSocial.trim();
+    proveedor.razonSocial = createProveedorDto.razonSocial.trim();
     proveedor.telefono = createProveedorDto.telefono;
     proveedor.representante = createProveedorDto.representante;
     proveedor.direccion = createProveedorDto.direccion;
@@ -37,7 +37,7 @@ export class ProveedoresService {
   }
 
   async findAll() {
-    return this.proveedoresRepository.find({ order: { RazonSocial: 'ASC' } });
+    return this.proveedoresRepository.find({ order: { razonSocial: 'ASC' } });
   }
 
   async findOne(id: number): Promise<Proveedor> {

@@ -5,10 +5,10 @@ export class CreateProveedorDto {
   @ApiProperty()
   @IsNotEmpty({ message: 'La razón social no debe estar vacio' })
   @IsString({ message: 'La razón social debe ser de tipo cadena' })
-  readonly RazonSocial: string;
+  readonly razonSocial: string;
 
   @ApiProperty()
-  @IsNotEmpty({ message: 'El ci o nit código no debe estar vacio' })
+  @IsNotEmpty({ message: 'El ci o nit no debe estar vacio' })
   @IsString({ message: 'El ci o nit debe ser de tipo cadena' })
   readonly ciNit: string;
 

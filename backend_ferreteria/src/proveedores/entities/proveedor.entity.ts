@@ -15,7 +15,7 @@ export class Proveedor {
   id: number;
 
   @Column('varchar', { name: 'razon_social' })
-  RazonSocial: string;
+  razonSocial: string;
 
   @Column('varchar', { length: 12 })
   ciNit: string;
