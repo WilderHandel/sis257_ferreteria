@@ -48,7 +48,7 @@ export class VentasDetallesService {
           codigo: true,
           descripcion: true,
           precioVenta: true,
-          cantidad: true,
+          saldo: true,
           unidadMedida: true,
         },
         venta: {
