@@ -37,11 +37,11 @@ export class VentaDetalle {
   @DeleteDateColumn({ name: 'fecha_eliminacion' })
   fechaEliminacion: Date;
 
-  @ManyToOne(() => Venta, () => venta.detalles)
+  @ManyToOne(() => Venta, (venta) => venta.ventasDetalles)
   @JoinColumn({ name: 'id_venta', referencedColumnName: 'id' })
   venta: Venta;
 
-  @ManyToOne(() => Producto, (producto) => producto.ventas)
+  @ManyToOne(() => Producto, (producto) => producto.ventasDetalles)
   @JoinColumn({ name: 'id_producto', referencedColumnName: 'id' })
   producto: Producto;
 }

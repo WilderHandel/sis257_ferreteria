@@ -23,4 +23,9 @@ export class CreateVentaDto {
   @IsDefined({ message: 'El campo transaccion debe estar definido' })
   @IsNumber({}, { message: 'El campo transaccion debe ser de tipo numérico' })
   readonly transaccion: number;
+
+  @ApiProperty()
+  @IsDefined({ message: 'El campo cantidad debe estar definido' })
+  @IsNumber({}, { message: 'El campo transaccion debe ser de tipo numérico' })
+  readonly cantidad: number;
 }

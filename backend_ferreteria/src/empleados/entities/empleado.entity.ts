@@ -1,8 +1,10 @@
+import { Usuario } from 'src/usuarios/entities/usuario.entity';
 import {
   Column,
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -18,10 +20,10 @@ export class Empleado {
   @Column('varchar', { length: 50 })
   nombre: string;
 
-  @Column('varchar', { length: 50 })
+  @Column('varchar', { length: 50, name: 'apellido_paterno', nullable: true })
   apellidoPaterno: string;
 
-  @Column('varchar', { length: 50 })
+  @Column('varchar', { length: 50, name: 'apellido_materno', nullable: true })
   apellidoMaterno: string;
 
   @Column('varchar', { length: 60 })
@@ -31,7 +33,7 @@ export class Empleado {
   celular: string;
 
   @Column('varchar', { length: 50 })
-  carga: string;
+  cargo: string;
 
   @CreateDateColumn({ name: 'fecha_creacion' })
   fechaCreacion: Date;
@@ -41,4 +43,7 @@ export class Empleado {
 
   @DeleteDateColumn({ name: 'fecha_eliminacion' })
   fechaEliminacion: Date;
+
+  @OneToOne(() => Usuario, (usuario) => usuario.empleado)
+  usuario: Usuario;
 }

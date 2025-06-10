@@ -31,6 +31,7 @@ export class VentasService {
     venta.idUsuario = CreateVentaDto.idUsuario;
     venta.fecha = CreateVentaDto.fecha;
     venta.transaccion = CreateVentaDto.transaccion;
+    venta.cantidad = CreateVentaDto.cantidad;
     return this.ventasRepository.save(venta);
   }
 
@@ -41,6 +42,7 @@ export class VentasService {
         id: true,
         fecha: true,
         transaccion: true,
+        cantidad: true,
         cliente: { id: true, nombre: true, ciNit: true },
         usuario: { id: true },
       },

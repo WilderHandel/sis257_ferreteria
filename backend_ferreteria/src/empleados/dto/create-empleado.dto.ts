@@ -17,18 +17,16 @@ export class CreateEmpleadoDto {
   readonly nombre: string;
 
   @ApiProperty()
-  @IsNotEmpty({ message: 'El campo paterno es obligatorio' })
-  @IsString({ message: 'El campo paterno debe ser de tipo cadena' })
+  @IsString({ message: 'El apellido paterno debe ser de tipo cadena' })
   @MaxLength(50, {
-    message: 'El paterno nombre no debe ser mayor a 50 caracteres',
+    message: 'El apellido paterno  no debe ser mayor a 50 caracteres',
   })
   readonly apellidoPaterno: string;
 
   @ApiProperty()
-  @IsNotEmpty({ message: 'El campo materno es obligatorio' })
-  @IsString({ message: 'El campo materno debe ser de tipo cadena' })
+  @IsString({ message: 'El apellido materno debe ser de tipo cadena' })
   @MaxLength(50, {
-    message: 'El campo materno no debe ser mayor a 50 caracteres',
+    message: 'El apellido materno no debe ser mayor a 50 caracteres',
   })
   readonly apellidoMaterno: string;
 
@@ -49,10 +47,10 @@ export class CreateEmpleadoDto {
   readonly celular: string;
 
   @ApiProperty()
-  @IsNotEmpty({ message: 'El campo carga no debe ser vacío' })
-  @IsString({ message: 'El campo carga debe ser de tipo cadena' })
+  @IsNotEmpty({ message: 'El campo cargo no debe ser vacío' })
+  @IsString({ message: 'El campo cargo debe ser de tipo cadena' })
   @MaxLength(50, {
-    message: 'El campo carga no debe ser mayor a 12 caracteres',
+    message: 'El campo cargo no debe ser mayor a 12 caracteres',
   })
-  readonly carga: string;
+  readonly cargo: string;
 }
