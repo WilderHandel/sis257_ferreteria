@@ -1,0 +1,37 @@
+<script setup lang="ts">
+import ProductoList from '@/components/producto/ProductoList.vue'
+import Button from 'primevue/button'
+import { ref } from 'vue'
+
+const mostrarDialog = ref(false)
+const productoListRef = ref<typeof ProductoList | null>(null)
+const productoEdit = ref<any>(null)
+
+function handleCreate() {
+  productoEdit.value = null
+  mostrarDialog.value = true
+}
+
+function handleEdit(producto: any) {
+  productoEdit.value = producto
+  mostrarDialog.value = true
+}
+
+function handleCloseDialog() {
+  mostrarDialog.value = false
+}
+
+function handleGuardar() {
+  productoListRef.value?.obtenerLista()
+}
+</script>
+
+<template>
+  <div>
+    <h2>Productos</h2>
+    <Button label="Crear Nuevo" icon="pi pi-plus" @click="handleCreate" />
+    <ProductoList ref="productoListRef" @edit="handleEdit" />
+  </div>
+</template>
+
+<style scoped></style>
