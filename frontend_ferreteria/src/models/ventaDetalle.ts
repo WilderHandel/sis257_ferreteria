@@ -1,4 +1,4 @@
-import { Producto } from "./producto"
+import type { Producto } from "./producto"
 
 export interface VentaDetalle {
   id: number
@@ -6,6 +6,6 @@ export interface VentaDetalle {
   idProducto: number
   precioUnitario: number
   total: number
-  //venta: Venta;
-  producto: Producto;
+  venta: Venta;
+  producto: Producto
 }

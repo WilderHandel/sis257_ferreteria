@@ -4,6 +4,7 @@ import http from '@/plugins/axios'
 import Button from 'primevue/button'
 import Dialog from 'primevue/dialog'
 import InputText from 'primevue/inputtext'
+import InputMask from 'primevue/inputmask'
 import { computed, ref, watch } from 'vue'
 
 const ENDPOINT = 'proveedores'
@@ -31,6 +32,17 @@ watch(
     proveedor.value = { ...newVal }
   },
 )
+
+const limpiarFormulario = () => {
+  proveedor.value = {
+    id: 0,
+    razonSocial: '',
+    ciNit: '',
+    telefono: '',
+    direccion: '',
+    representante: '',
+  }
+}
 
 async function handleSave() {
   try {
@@ -74,18 +86,14 @@ async function handleSave() {
       </div>
       <div class="flex items-center gap-4 mb-4">
         <label for="ciNit" class="font-semibold w-3">CI/NIT</label>
-        <InputText
-          id="ciNit"
-          v-model="proveedor.ciNit"
-          class="flex-auto"
-          autocomplete="off"
-        />
+        <InputText id="ciNit" v-model="proveedor.ciNit" class="flex-auto" autocomplete="off" />
       </div>
       <div class="flex items-center gap-4 mb-4">
         <label for="telefono" class="font-semibold w-3">Teléfono</label>
-        <InputText
+        <InputMask
           id="telefono"
           v-model="proveedor.telefono"
+          mask="99999999"
           class="flex-auto"
           autocomplete="off"
         />
@@ -114,7 +122,7 @@ async function handleSave() {
           label="Cancelar"
           icon="pi pi-times"
           severity="secondary"
-          @click="dialogVisible = false"
+          @click="() => { limpiarFormulario(); dialogVisible = false }"
         ></Button>
         <Button type="button" label="Guardar" icon="pi pi-save" @click="handleSave"></Button>
       </div>
