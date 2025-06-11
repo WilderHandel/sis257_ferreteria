@@ -25,7 +25,18 @@ const dialogVisible = computed({
 })
 
 const categoria = ref<Categoria>({ ...props.categoria })
+watch(
+  () => props.categoria,
+  (newVal) => {
+    categoria.value = { ...newVal }
+  },
+)
+
 async function handleSave() {
+  if (!categoria.value.nombre || !categoria.value.descripcion) {
+    alert('Por favor complete todos los campos');
+    return;
+  }
   try {
     const body = {
       nombre: categoria.value.nombre,
@@ -43,12 +54,6 @@ async function handleSave() {
     alert(error?.response?.data?.message)
   }
 }
-watch(
-  () => props.categoria,
-  (newVal) => {
-    categoria.value = { ...newVal }
-  },
-)
 
 </script>
 

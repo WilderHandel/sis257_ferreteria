@@ -26,7 +26,18 @@ const dialogVisible = computed({
 })
 
 const proveedor = ref<Proveedor>({ ...props.proveedor })
+watch(
+  () => props.proveedor,
+  (newVal) => {
+    proveedor.value = { ...newVal }
+  },
+)
+
 async function handleSave() {
+  if (!proveedor.value.razonSocial || !proveedor.value.ciNit) {
+    alert('Por favor complete todos los campos');
+    return;
+  }
   try {
     const body = {
       razonSocial: proveedor.value.razonSocial,
@@ -47,31 +58,15 @@ async function handleSave() {
     alert(error?.response?.data?.message)
   }
 }
-watch(
-  () => props.proveedor,
-  (newVal) => {
-    proveedor.value = { ...newVal }
-  },
-)
 
 </script>
 
 <template>
   <div class="card flex justify-center">
-    <Dialog
-      v-model:visible="dialogVisible"
-      :header="props.modoEdicion ? 'Editar' : 'Crear'"
-      style="width: 25rem"
-    >
+    <Dialog v-model:visible="dialogVisible" :header="props.modoEdicion ? 'Editar' : 'Crear'" style="width: 25rem">
       <div class="flex items-center gap-4 mb-4">
         <label for="razonSocial" class="font-semibold w-3">Razón Social</label>
-        <InputText
-          id="razonSocial"
-          v-model="proveedor.razonSocial"
-          class="flex-auto"
-          autocomplete="off"
-          autofocus
-        />
+        <InputText id="razonSocial" v-model="proveedor.razonSocial" class="flex-auto" autocomplete="off" autofocus />
       </div>
       <div class="flex items-center gap-4 mb-4">
         <label for="ciNit" class="font-semibold w-3">CI/NIT</label>
@@ -79,40 +74,19 @@ watch(
       </div>
       <div class="flex items-center gap-4 mb-4">
         <label for="telefono" class="font-semibold w-3">Teléfono</label>
-        <InputMask
-          id="telefono"
-          v-model="proveedor.telefono"
-          mask="99999999"
-          class="flex-auto"
-          autocomplete="off"
-        />
+        <InputMask id="telefono" v-model="proveedor.telefono" mask="99999999" class="flex-auto" autocomplete="off" />
       </div>
       <div class="flex items-center gap-4 mb-4">
         <label for="direccion" class="font-semibold w-3">Dirección</label>
-        <InputText
-          id="direccion"
-          v-model="proveedor.direccion"
-          class="flex-auto"
-          autocomplete="off"
-        />
+        <InputText id="direccion" v-model="proveedor.direccion" class="flex-auto" autocomplete="off" />
       </div>
       <div class="flex items-center gap-4 mb-4">
         <label for="representante" class="font-semibold w-3">Representante</label>
-        <InputText
-          id="representante"
-          v-model="proveedor.representante"
-          class="flex-auto"
-          autocomplete="off"
-        />
+        <InputText id="representante" v-model="proveedor.representante" class="flex-auto" autocomplete="off" />
       </div>
       <div class="flex justify-end gap-2">
-        <Button
-          type="button"
-          label="Cancelar"
-          icon="pi pi-times"
-          severity="secondary"
-          @click="dialogVisible = false"
-        ></Button>
+        <Button type="button" label="Cancelar" icon="pi pi-times" severity="secondary"
+          @click="dialogVisible = false"></Button>
         <Button type="button" label="Guardar" icon="pi pi-save" @click="handleSave"></Button>
       </div>
     </Dialog>
