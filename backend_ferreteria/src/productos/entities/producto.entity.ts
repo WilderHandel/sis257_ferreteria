@@ -6,9 +6,9 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
-  OneToMany,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -53,6 +53,7 @@ export class Producto {
 
   @OneToMany(() => VentaDetalle, (ventaDetalle) => ventaDetalle.producto)
   ventasDetalles: VentaDetalle[];
+
   @ManyToOne(() => Categoria, (categoria) => categoria.producto)
   @JoinColumn({ name: 'id_categoria', referencedColumnName: 'id' })
   categoria: Categoria;
