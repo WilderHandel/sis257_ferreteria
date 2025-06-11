@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import ProductoList from '@/components/producto/ProductoList.vue'
+import ProductoSave from '@/components/producto/ProductoSave.vue'
 import Button from 'primevue/button'
 import { ref } from 'vue'
 
@@ -31,6 +32,13 @@ function handleGuardar() {
     <h2>Productos</h2>
     <Button label="Crear Nuevo" icon="pi pi-plus" @click="handleCreate" />
     <ProductoList ref="productoListRef" @edit="handleEdit" />
+    <ProductoSave
+      :mostrar="mostrarDialog"
+      :producto="productoEdit"
+      :modoEdicion="!!productoEdit"
+      @guardar="handleGuardar"
+      @close="handleCloseDialog"
+/>
   </div>
 </template>
 

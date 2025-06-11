@@ -1,29 +1,28 @@
 <script setup lang="ts">
+import type { Producto } from '@/models/producto'
 import http from '@/plugins/axios'
-import { Select } from 'primevue'
+import { ref, computed, watch } from 'vue'
+import Button from 'primevue/button'
 import Dialog from 'primevue/dialog'
 import InputText from 'primevue/inputtext'
-import Calendar from 'primevue/calendar'
 import InputNumber from 'primevue/inputnumber'
-import Button from 'primevue/button'
-import { ref, computed, watch } from 'vue'
-import type { Producto } from '@/models/producto'
+import { Select } from 'primevue'
 
-const ENDPOINT = 'series'
+const ENDPOINT = 'productos'
 
+// Props
 const props = defineProps({
   mostrar: Boolean,
   producto: {
     type: Object as () => Producto,
-    default: () => ({}) as Producto,
+    default: () => ({} as Producto),
   },
   modoEdicion: Boolean,
 })
+
 const emit = defineEmits(['guardar', 'close'])
 
-//const categorias = ref<Categoria[]>([])
-//const proveedores = ref<Proveedor[]>([])
-
+// Refs
 const dialogVisible = computed({
   get: () => props.mostrar,
   set: (value) => {
@@ -31,35 +30,48 @@ const dialogVisible = computed({
   },
 })
 
-const producto = ref<Producto>({
-  ...(props.producto || { categoria: { id: 0 }, proveedor: { id: 0 } }),
-})
+const producto = ref<Producto>({ ...props.producto })
+const categorias = ref<{ id: number; descripcion: string }[]>([])
+const proveedores = ref<{ id: number; nombre: string }[]>([])
 
+// Carga de datos
 async function obtenerCategorias() {
-  producto.value = await http.get('categorias').then((response) => response.data)
+  try {
+    const response = await http.get('categorias')
+    categorias.value = response.data
+  } catch (error) {
+    console.error('Error al obtener categorías', error)
+  }
 }
 
 async function obtenerProveedores() {
-  producto.value = await http.get('proveedores').then((response) => response.data)
+  try {
+    const response = await http.get('proveedores')
+    proveedores.value = response.data
+  } catch (error) {
+    console.error('Error al obtener proveedores', error)
+  }
 }
 
+// Guardar producto
 async function handleSave() {
   try {
     const body = {
       idCategoria: producto.value.categoria.id,
       idProveedor: producto.value.proveedor.id,
       codigo: producto.value.codigo,
-      descripcion: producto.value.descripcion,
       precioVenta: producto.value.precioVenta,
       saldo: producto.value.saldo,
+      fotografia: producto.value.fotografia,
       unidadMedida: producto.value.unidadMedida,
-      fotografia: producto.value.fotografia
     }
+
     if (props.modoEdicion) {
       await http.patch(`${ENDPOINT}/${producto.value.id}`, body)
     } else {
       await http.post(ENDPOINT, body)
     }
+
     emit('guardar')
     producto.value = {} as Producto
     dialogVisible.value = false
@@ -68,32 +80,16 @@ async function handleSave() {
   }
 }
 
+// Watch para apertura del diálogo
 watch(
   () => props.mostrar,
   (nuevoValor) => {
     if (nuevoValor) {
+      producto.value = { ...props.producto }
       obtenerCategorias()
       obtenerProveedores()
-      
-      if (props.modoEdicion) {
-        producto.value = { ...props.producto }
-        if (producto.value.fechaEstreno && !(producto.value.fechaEstreno instanceof Date)) {
-          producto.value.fechaEstreno = new Date(producto.value.fechaEstreno)
-        }
-      } else {
-        // Inicializar la serie con valores por defecto para "crear"
-        producto.value = {
-          titulo: '',
-          sinopsis: '',
-          director: '',
-          temporadas: 1,
-          tipoClasificacion: '',
-          fechaEstreno: new Date(),
-          pais: { id: 0, descripcion: '' },
-        }
-      }
     }
-  },
+  }
 )
 </script>
 
@@ -101,80 +97,79 @@ watch(
   <div class="card flex justify-center">
     <Dialog
       v-model:visible="dialogVisible"
-      :header="(props.modoEdicion ? 'Editar' : 'Crear') + ' Serie'"
-      style="width: 30rem"
+      :header="(props.modoEdicion ? 'Editar' : 'Crear') + ' Producto'"
+      style="width: 25rem"
     >
-      <div class="flex items-center gap-4 mb-4">
-        <label for="pais" class="font-semibold w-3">País</label>
-        <Select
-          id="pais"
-          v-model="producto.pais.id"
-          :options="productos"
-          optionLabel="descripcion"
-          optionValue="id"
-          placeholder="Seleccione un país"
-          class="flex-auto"
-          autofocus
-        />
-      </div>
-      <div class="flex items-center gap-4 mb-4">
-        <label for="titulo" class="font-semibold w-3">Título</label>
-        <InputText
-          id="titulo"
-          v-model="producto.titulo"
-          class="flex-auto"
-          autocomplete="off"
-          autofocus
-          maxlength="250"
-        />
-      </div>
-      <div class="flex items-center gap-4 mb-4">
-        <label for="sinopsis" class="font-semibold w-3">Sinopsis</label>
-        <InputText
-          id="sinopsis"
-          v-model="producto.sinopsis"
-          class="flex-auto"
-          autocomplete="off"
-          maxlength="5000"
-        />
-      </div>
-      <div class="flex items-center gap-4 mb-4">
-        <label for="director" class="font-semibold w-3">Director</label>
-        <InputText
-          id="director"
-          v-model="producto.director"
-          class="flex-auto"
-          autocomplete="off"
-          maxlength="100"
-        />
-      </div>
-      <div class="flex items-center gap-4 mb-4">
-        <label for="temporadas" class="font-semibold w-3">Temporadas</label>
-        <InputNumber v-model="producto.temporadas" class="flex-auto" />
-      </div>
-      <div class="flex items-center gap-4 mb-4">
-        <label for="fecha_estreno" class="font-semibold w-3">Fecha de estreno</label>
-        <Calendar
-          v-model="producto.fechaEstreno"
-          date-format="yy-mm-dd"
-          showIcon
-          class="flex-auto"
-        />
-      </div>
-      <div class="flex items-center gap-4 mb-4">
-        <label for="tipo_clasificacion" class="font-semibold w-3">Tipo de Clasificación</label>
-        <Select
-          id="tipo_clasificacion"
-          v-model="producto.tipoClasificacion"
-          :options="tiposClasificacion"
-          optionLabel="label"
-          optionValue="value"
-          placeholder="Seleccione una clasificación"
-          class="flex-auto"
-          autofocus
-        />
-      </div>
-      <div class="flex justify-end gap-2">
+        <div class="flex items-center gap-4 mb-4">
+          <label for="categoria" class="font-semibold w-3">Categoría</label>
+          <Select
+            id="categoria"
+            v-model="producto.categoria.id"
+            :options="categorias"
+            optionLabel="descripcion"
+            optionValue="id"
+            class="flex-auto"
+            autofocus
+          />
+        </div>
+
+        <div class="flex items-center gap-4 mb-4">
+          <label for="proveedor" class="font-semibold w-3">Proveedor</label>
+          <Select
+            id="proveedor"
+            v-model="producto.proveedor.id"
+            :options="proveedores"
+            optionLabel="nombre"
+            optionValue="id"
+            class="flex-auto"
+            autofocus
+          />
+        </div>
+
+        <div class="flex items-center gap-4 mb-4">
+          <label for="codigo" class="font-semibold w-3">Código</label>
+          <InputText id="codigo" v-model="producto.codigo" class="flex-auto" />
+        </div>
+
+        <div class="flex items-center gap-4 mb-4">
+          <label for="descripcion" class="font-semibold">Descripción</label>
+          <InputText id="descripcion" v-model="producto.descripcion" class="flex-auto" />
+        </div>
+
+        <div class="flex items-center gap-4 mb-4">
+          <label for="precio" class="font-semibold">Precio Venta</label>
+          <InputNumber
+            id="precio"
+            v-model="producto.precioVenta"
+            class="flex-auto"
+            :min="0"
+            mode="currency"
+            currency="Bs"
+            locale="es-BO"
+          />
+        </div>
+
+        <div class="flex items-center gap-4 mb-4">
+          <label for="saldo" class="font-semibold">Saldo</label>
+          <InputNumber
+            id="saldo"
+            v-model="producto.saldo"
+            class="flex-auto"
+            :min="0"
+            :useGrouping="false"
+          />
+        </div>
+
+        <div class="flex items-center gap-4 mb-4">
+          <label for="unidadmMedida" class="font-semibold">Unidad de Medida</label>
+          <InputText id="unidadMedida" v-model="producto.unidadMedida" class="flex-auto" />
+        </div>
+
+        <div class="flex items-center gap-4 mb-4">
+          <label for="foto" class="font-semibold">Fotografía (URL)</label>
+          <InputText id="foto" v-model="producto.fotografia" class="flex-auto" />
+        </div>
+        <div class="flex justify-end gap-2">
         <Button
           type="button"
           label="Cancelar"
@@ -187,3 +182,5 @@ watch(
     </Dialog>
   </div>
 </template>
+
+<style scoped></style>
