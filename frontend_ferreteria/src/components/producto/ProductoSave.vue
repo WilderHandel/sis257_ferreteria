@@ -12,19 +12,16 @@ import { Select } from 'primevue'
 
 const ENDPOINT = 'productos'
 
-// Props
 const props = defineProps({
   mostrar: Boolean,
   producto: {
     type: Object as () => Producto,
-    default: () => ({}) as Producto,
+    default: () => ({} as Producto),
   },
   modoEdicion: Boolean,
 })
-
 const emit = defineEmits(['guardar', 'close'])
 
-const productos = ref<Producto[]>([])
 const categorias = ref<Categoria[]>([])
 const proveedores = ref<Proveedor[]>([])
 
@@ -35,46 +32,27 @@ const dialogVisible = computed({
   },
 })
 
-const producto = ref<Producto>({
-  id: 0,
-  codigo: '',
-  descripcion: '',
-  precioVenta: 0,
-  saldo: 0,
-  unidadMedida: '',
-  fotografia: '',
-  categoria: { id: null, nombre: '', descripcion: '' },
-  proveedor: {
-    id: null,
-    razonSocial: '',
-    ciNit: '',
-    telefono: 0,
-    direccion: '',
-    representante: '',
-  },
-})
-const categoria = ref<Categoria>({} as Categoria)
-const proveedor = ref<Proveedor>({} as Proveedor)
+const producto = ref<Producto>({ ...props.producto })
 
 async function obtenerCategorias() {
-  categorias.value = await http.get('categorias').then((response) => response.data)
+  categorias.value = await http.get('categorias').then(res => res.data)
 }
 
 async function obtenerProveedores() {
-  proveedores.value = await http.get('proveedores').then((response) => response.data)
+  proveedores.value = await http.get('proveedores').then(res => res.data)
 }
 
-// Guardar producto
 async function handleSave() {
   try {
     const body = {
-      idCategoria: producto.value.categoria.id,
-      idProveedor: producto.value.proveedor.id,
+      idCategoria: producto.value.categoria?.id ?? 0,
+      idProveedor: producto.value.proveedor?.id ?? 0,
       codigo: producto.value.codigo,
-      precioVenta: producto.value.precioVenta,
+      descripcion: producto.value.descripcion,
+      precioVenta: Number(producto.value.precioVenta),
       saldo: producto.value.saldo,
-      fotografia: producto.value.fotografia,
       unidadMedida: producto.value.unidadMedida,
+      fotografia: producto.value.fotografia,
     }
 
     if (props.modoEdicion) {
@@ -97,8 +75,22 @@ watch(
     if (nuevoValor) {
       obtenerCategorias()
       obtenerProveedores()
+      if (props.producto?.id) {
+        producto.value = { ...props.producto }
+      } else {
+        producto.value = {
+          categoria: { id: 0 },
+          proveedor: { id: 0 },
+          codigo: '',
+          descripcion: '',
+          precioVenta: 0,
+          saldo: 0,
+          unidadMedida: '',
+          fotografia: '',
+        } as Producto
+      }
     }
-  },
+  }
 )
 </script>
 
@@ -131,7 +123,6 @@ watch(
           optionLabel="razonSocial"
           optionValue="id"
           class="flex-auto"
-          autofocus
         />
       </div>
 
@@ -170,14 +161,15 @@ watch(
       </div>
 
       <div class="flex items-center gap-4 mb-4">
-        <label for="unidadmMedida" class="font-semibold">Unidad de Medida</label>
+        <label for="unidadMedida" class="font-semibold">Unidad de Medida</label>
         <InputText id="unidadMedida" v-model="producto.unidadMedida" class="flex-auto" />
       </div>
 
       <div class="flex items-center gap-4 mb-4">
-        <label for="foto" class="font-semibold">Fotografía (URL)</label>
-        <InputText id="foto" v-model="producto.fotografia" class="flex-auto" />
+        <label for="fotografia" class="font-semibold">Fotografía (URL)</label>
+        <InputText id="fotografia" v-model="producto.fotografia" class="flex-auto" />
       </div>
+
       <div class="flex justify-end gap-2">
         <Button
           type="button"

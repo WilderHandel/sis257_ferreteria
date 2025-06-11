@@ -32,7 +32,7 @@ export class CreateProductoDto {
   readonly descripcion: string;
 
   @ApiProperty()
-  @IsNotEmpty({ message: 'El campo precion de venta no debe ser vacío' })
+  @IsNotEmpty({ message: 'El campo precio de venta no debe ser vacío' })
   @IsNumber({}, { message: 'El campo precio de venta debe ser un número' })
   @Min(0, { message: 'El precio de venta no puede ser negativo' })
   readonly precioVenta: number;
@@ -40,7 +40,7 @@ export class CreateProductoDto {
   @ApiProperty()
   @IsNotEmpty({ message: 'El campo saldo no debe ser vacío' })
   @IsNumber({}, { message: 'El campo saldo debe ser un número' })
-  @Min(0, { message: 'La saldo no puede ser negativa' })
+  @Min(0, { message: 'El campo saldo no puede ser negativo' })
   readonly saldo: number;
 
   @ApiProperty()

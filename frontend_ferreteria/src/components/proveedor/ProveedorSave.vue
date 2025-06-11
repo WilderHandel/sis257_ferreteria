@@ -26,24 +26,6 @@ const dialogVisible = computed({
 })
 
 const proveedor = ref<Proveedor>({ ...props.proveedor })
-watch(
-  () => props.proveedor,
-  (newVal) => {
-    proveedor.value = { ...newVal }
-  },
-)
-
-const limpiarFormulario = () => {
-  proveedor.value = {
-    id: 0,
-    razonSocial: '',
-    ciNit: '',
-    telefono: '',
-    direccion: '',
-    representante: '',
-  }
-}
-
 async function handleSave() {
   try {
     const body = {
@@ -65,6 +47,13 @@ async function handleSave() {
     alert(error?.response?.data?.message)
   }
 }
+watch(
+  () => props.proveedor,
+  (newVal) => {
+    proveedor.value = { ...newVal }
+  },
+)
+
 </script>
 
 <template>
@@ -122,12 +111,7 @@ async function handleSave() {
           label="Cancelar"
           icon="pi pi-times"
           severity="secondary"
-          @click="
-            () => {
-              limpiarFormulario()
-              dialogVisible = false
-            }
-          "
+          @click="dialogVisible = false"
         ></Button>
         <Button type="button" label="Guardar" icon="pi pi-save" @click="handleSave"></Button>
       </div>

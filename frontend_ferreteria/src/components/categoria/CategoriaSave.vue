@@ -25,21 +25,6 @@ const dialogVisible = computed({
 })
 
 const categoria = ref<Categoria>({ ...props.categoria })
-watch(
-  () => props.categoria,
-  (newVal) => {
-    categoria.value = { ...newVal }
-  },
-)
-
-const limpiarFormulario = () => {
-  categoria.value = {
-    id: 0,
-    nombre: '',
-    descripcion: '',
-  }
-}
-
 async function handleSave() {
   try {
     const body = {
@@ -58,6 +43,13 @@ async function handleSave() {
     alert(error?.response?.data?.message)
   }
 }
+watch(
+  () => props.categoria,
+  (newVal) => {
+    categoria.value = { ...newVal }
+  },
+)
+
 </script>
 
 <template>
@@ -92,12 +84,7 @@ async function handleSave() {
           label="Cancelar"
           icon="pi pi-times"
           severity="secondary"
-          @click="
-            () => {
-              limpiarFormulario()
-              dialogVisible = false
-            }
-          "
+          @click="dialogVisible = false"
         ></Button>
         <Button type="button" label="Guardar" icon="pi pi-save" @click="handleSave"></Button>
       </div>

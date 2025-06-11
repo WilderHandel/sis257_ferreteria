@@ -1,6 +1,5 @@
-export interface Producto {
+export interface Categoria {
   id: number
-  razonSocial: string
   nombre: string
   descripcion: string
 }
