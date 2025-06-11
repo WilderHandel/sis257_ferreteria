@@ -33,7 +33,7 @@ export class Producto {
   @Column('decimal', { name: 'precio_venta' })
   precioVenta: number;
 
-  @Column('int')
+  @Column('integer')
   saldo: number;
 
   @Column('varchar', { name: 'unidad_medida' })

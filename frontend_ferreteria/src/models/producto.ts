@@ -1,3 +1,6 @@
+
+import type { Categoria } from '@/models/categoria'
+import type { Proveedor } from '@/models/proveedor'
 export interface Producto {
   id: number
   idCategoria: number
@@ -8,4 +11,6 @@ export interface Producto {
   saldo: number
   unidadMedida: string
   fotografia: string
+  categoria: Categoria
+  proveedor: Proveedor
 }

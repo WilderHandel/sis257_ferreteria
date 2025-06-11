@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import type { Producto } from '@/models/producto'
+import type { Categoria } from '@/models/categoria'
+import type { Proveedor } from '@/models/proveedor'
 import http from '@/plugins/axios'
 import { ref, computed, watch } from 'vue'
 import Button from 'primevue/button'
@@ -15,14 +17,17 @@ const props = defineProps({
   mostrar: Boolean,
   producto: {
     type: Object as () => Producto,
-    default: () => ({} as Producto),
+    default: () => ({}) as Producto,
   },
   modoEdicion: Boolean,
 })
 
 const emit = defineEmits(['guardar', 'close'])
 
-// Refs
+const productos = ref<Producto[]>([])
+const categorias = ref<Categoria[]>([])
+const proveedores = ref<Proveedor[]>([])
+
 const dialogVisible = computed({
   get: () => props.mostrar,
   set: (value) => {
@@ -30,27 +35,33 @@ const dialogVisible = computed({
   },
 })
 
-const producto = ref<Producto>({ ...props.producto })
-const categorias = ref<{ id: number; descripcion: string }[]>([])
-const proveedores = ref<{ id: number; nombre: string }[]>([])
+const producto = ref<Producto>({
+  id: 0,
+  codigo: '',
+  descripcion: '',
+  precioVenta: 0,
+  saldo: 0,
+  unidadMedida: '',
+  fotografia: '',
+  categoria: { id: null, nombre: '', descripcion: '' },
+  proveedor: {
+    id: null,
+    razonSocial: '',
+    ciNit: '',
+    telefono: 0,
+    direccion: '',
+    representante: '',
+  },
+})
+const categoria = ref<Categoria>({} as Categoria)
+const proveedor = ref<Proveedor>({} as Proveedor)
 
-// Carga de datos
 async function obtenerCategorias() {
-  try {
-    const response = await http.get('categorias')
-    categorias.value = response.data
-  } catch (error) {
-    console.error('Error al obtener categorías', error)
-  }
+  categorias.value = await http.get('categorias').then((response) => response.data)
 }
 
 async function obtenerProveedores() {
-  try {
-    const response = await http.get('proveedores')
-    proveedores.value = response.data
-  } catch (error) {
-    console.error('Error al obtener proveedores', error)
-  }
+  proveedores.value = await http.get('proveedores').then((response) => response.data)
 }
 
 // Guardar producto
@@ -80,16 +91,14 @@ async function handleSave() {
   }
 }
 
-// Watch para apertura del diálogo
 watch(
   () => props.mostrar,
   (nuevoValor) => {
     if (nuevoValor) {
-      producto.value = { ...props.producto }
       obtenerCategorias()
       obtenerProveedores()
     }
-  }
+  },
 )
 </script>
 
@@ -100,76 +109,76 @@ watch(
       :header="(props.modoEdicion ? 'Editar' : 'Crear') + ' Producto'"
       style="width: 25rem"
     >
-        <div class="flex items-center gap-4 mb-4">
-          <label for="categoria" class="font-semibold w-3">Categoría</label>
-          <Select
-            id="categoria"
-            v-model="producto.categoria.id"
-            :options="categorias"
-            optionLabel="descripcion"
-            optionValue="id"
-            class="flex-auto"
-            autofocus
-          />
-        </div>
+      <div class="flex items-center gap-4 mb-4">
+        <label for="categoria" class="font-semibold w-3">Categoría</label>
+        <Select
+          id="categoria"
+          v-model="producto.categoria.id"
+          :options="categorias"
+          optionLabel="descripcion"
+          optionValue="id"
+          class="flex-auto"
+          autofocus
+        />
+      </div>
 
-        <div class="flex items-center gap-4 mb-4">
-          <label for="proveedor" class="font-semibold w-3">Proveedor</label>
-          <Select
-            id="proveedor"
-            v-model="producto.proveedor.id"
-            :options="proveedores"
-            optionLabel="nombre"
-            optionValue="id"
-            class="flex-auto"
-            autofocus
-          />
-        </div>
+      <div class="flex items-center gap-4 mb-4">
+        <label for="proveedor" class="font-semibold w-3">Proveedor</label>
+        <Select
+          id="proveedor"
+          v-model="producto.proveedor.id"
+          :options="proveedores"
+          optionLabel="razonSocial"
+          optionValue="id"
+          class="flex-auto"
+          autofocus
+        />
+      </div>
 
-        <div class="flex items-center gap-4 mb-4">
-          <label for="codigo" class="font-semibold w-3">Código</label>
-          <InputText id="codigo" v-model="producto.codigo" class="flex-auto" />
-        </div>
+      <div class="flex items-center gap-4 mb-4">
+        <label for="codigo" class="font-semibold w-3">Código</label>
+        <InputText id="codigo" v-model="producto.codigo" class="flex-auto" />
+      </div>
 
-        <div class="flex items-center gap-4 mb-4">
-          <label for="descripcion" class="font-semibold">Descripción</label>
-          <InputText id="descripcion" v-model="producto.descripcion" class="flex-auto" />
-        </div>
+      <div class="flex items-center gap-4 mb-4">
+        <label for="descripcion" class="font-semibold">Descripción</label>
+        <InputText id="descripcion" v-model="producto.descripcion" class="flex-auto" />
+      </div>
 
-        <div class="flex items-center gap-4 mb-4">
-          <label for="precio" class="font-semibold">Precio Venta</label>
-          <InputNumber
-            id="precio"
-            v-model="producto.precioVenta"
-            class="flex-auto"
-            :min="0"
-            mode="currency"
-            currency="Bs"
-            locale="es-BO"
-          />
-        </div>
+      <div class="flex items-center gap-4 mb-4">
+        <label for="precio" class="font-semibold">Precio Venta</label>
+        <InputNumber
+          id="precio"
+          v-model="producto.precioVenta"
+          class="flex-auto"
+          :min="0"
+          mode="currency"
+          currency="BOB"
+          locale="es-BO"
+        />
+      </div>
 
-        <div class="flex items-center gap-4 mb-4">
-          <label for="saldo" class="font-semibold">Saldo</label>
-          <InputNumber
-            id="saldo"
-            v-model="producto.saldo"
-            class="flex-auto"
-            :min="0"
-            :useGrouping="false"
-          />
-        </div>
+      <div class="flex items-center gap-4 mb-4">
+        <label for="saldo" class="font-semibold">Saldo</label>
+        <InputNumber
+          id="saldo"
+          v-model="producto.saldo"
+          class="flex-auto"
+          :min="0"
+          :useGrouping="false"
+        />
+      </div>
 
-        <div class="flex items-center gap-4 mb-4">
-          <label for="unidadmMedida" class="font-semibold">Unidad de Medida</label>
-          <InputText id="unidadMedida" v-model="producto.unidadMedida" class="flex-auto" />
-        </div>
+      <div class="flex items-center gap-4 mb-4">
+        <label for="unidadmMedida" class="font-semibold">Unidad de Medida</label>
+        <InputText id="unidadMedida" v-model="producto.unidadMedida" class="flex-auto" />
+      </div>
 
-        <div class="flex items-center gap-4 mb-4">
-          <label for="foto" class="font-semibold">Fotografía (URL)</label>
-          <InputText id="foto" v-model="producto.fotografia" class="flex-auto" />
-        </div>
-        <div class="flex justify-end gap-2">
+      <div class="flex items-center gap-4 mb-4">
+        <label for="foto" class="font-semibold">Fotografía (URL)</label>
+        <InputText id="foto" v-model="producto.fotografia" class="flex-auto" />
+      </div>
+      <div class="flex justify-end gap-2">
         <Button
           type="button"
           label="Cancelar"
