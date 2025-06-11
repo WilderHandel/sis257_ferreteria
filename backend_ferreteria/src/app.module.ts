@@ -11,7 +11,7 @@ import VentasDetallesModule from './ventas_detalles/ventas_detalles.module';
 import { CategoriasModule } from './categorias/categorias.module';
 import { ClientesModule } from './clientes/clientes.module';
 import { ProveedoresModule } from './proveedores/proveedores.module';
-
+import { AuthModule } from './auth/auth.module';
 @Module({
   imports: [
     ConfigModule.forRoot(),
@@ -34,6 +34,7 @@ import { ProveedoresModule } from './proveedores/proveedores.module';
     CategoriasModule,
     ClientesModule,
     ProveedoresModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

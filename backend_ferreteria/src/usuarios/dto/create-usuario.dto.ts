@@ -1,5 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsString, MaxLength } from 'class-validator';
+import {
+  IsDefined,
+  IsInt,
+  IsNotEmpty,
+  IsString,
+  MaxLength,
+} from 'class-validator';
 
 export class CreateUsuarioDto {
   @ApiProperty()
@@ -9,6 +15,8 @@ export class CreateUsuarioDto {
     message: 'El campo usuario no debe ser mayor a 15 caracteres',
   })
   readonly usuario: string;
-
+  @ApiProperty()
+  @IsDefined({ message: 'El campo idEmpleado debe estar definido' })
+  @IsInt({ message: 'El campo idEmpleado debe ser de tipo numérico' })
   readonly idEmpleado: number;
 }
