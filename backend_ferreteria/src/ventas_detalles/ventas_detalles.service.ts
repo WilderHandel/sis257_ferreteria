@@ -20,7 +20,6 @@ export class VentasDetallesService {
     createVentaDetalleDto: CreateVentaDetalleDto,
   ): Promise<VentaDetalle> {
     const existe = await this.ventasRepository.findOneBy({
-      idVenta: createVentaDetalleDto.idVenta,
       idProducto: createVentaDetalleDto.idProducto,
       precioUnitario: createVentaDetalleDto.precioUnitario,
       total: createVentaDetalleDto.total,
@@ -29,7 +28,6 @@ export class VentasDetallesService {
     if (existe) throw new ConflictException('El detalle de la venta ya existe');
 
     const ventaDetalle = new VentaDetalle();
-    ventaDetalle.idVenta = createVentaDetalleDto.idVenta;
     ventaDetalle.idProducto = createVentaDetalleDto.idProducto;
     ventaDetalle.precioUnitario = createVentaDetalleDto.precioUnitario;
     ventaDetalle.total = createVentaDetalleDto.total;

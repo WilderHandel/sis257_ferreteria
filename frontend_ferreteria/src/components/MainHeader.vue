@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
 import { useRoute } from 'vue-router'
+import { useAuthStore } from "@/stores/index";
+const authStore = useAuthStore();
 const route = useRoute()
 </script>
 
@@ -55,11 +57,30 @@ const route = useRoute()
               <div class="limit-box">
                 <nav class="main-menu">
                   <ul class="menu-area-main">
-                    <li class="active"><RouterLink to="/">Inicio</RouterLink></li>
-                    <li><RouterLink to="/about">Acerca de</RouterLink></li>
-                    <li><RouterLink to="/producto">Productos</RouterLink></li>
-                    <li><RouterLink to="/proveedores">Proveedores</RouterLink></li>
-                    <li><RouterLink to="/categorias">Categorias</RouterLink></li>
+                    <li>
+                      <RouterLink to="/">Inicio</RouterLink>
+                    </li>
+                    <li v-if="!authStore.token">
+                      <RouterLink to="/login">Iniciar Sesión</RouterLink>
+                    </li>
+                    <template v-else>
+                      <li>
+                        <RouterLink to="/about">Acerca de</RouterLink>
+                      </li>
+                      <li>
+                        <RouterLink to="/producto">Productos</RouterLink>
+                      </li>
+                      <li>
+                        <RouterLink to="/clientes">Clientes</RouterLink>
+                      </li>
+                      <li>
+                        <RouterLink to="/proveedores">Proveedores</RouterLink>
+                      </li>
+                      <li>
+                        <RouterLink to="/categorias">Categorias</RouterLink>
+                      </li>
+                      <li><a @click.prevent="authStore.logout()" class="text-danger" href="#">Salir</a></li>
+                    </template>
                   </ul>
                 </nav>
               </div>
@@ -94,7 +115,8 @@ const route = useRoute()
             </div>
           </div>
           <div class="carousel-item">
-            <RouterLink to="/"><img class="second-slide" src="@/assets/images/banner2.jpg" alt="Second slide" /></RouterLink>
+            <RouterLink to="/"><img class="second-slide" src="@/assets/images/banner2.jpg" alt="Second slide" />
+            </RouterLink>
             <div class="container">
               <div class="carousel-caption relative">
                 <h1>
@@ -111,7 +133,7 @@ const route = useRoute()
             </div>
           </div>
           <div class="carousel-item">
-           <RouterLink to="/"><img src="@/assets/images/banner2.jpg" alt="banner" /></RouterLink>
+            <RouterLink to="/"><img src="@/assets/images/banner2.jpg" alt="banner" /></RouterLink>
             <div class="container">
               <div class="carousel-caption relative">
                 <h1>
