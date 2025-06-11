@@ -2,8 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsDefined, IsInt, IsNumber } from 'class-validator';
 
 export class CreateVentaDetalleDto {
-
-   @ApiProperty()
+  @ApiProperty()
   @IsDefined({ message: 'El campo idVenta debe estar definido' })
   @IsInt({ message: 'El campo idVenta debe ser de tipo numérico' })
   readonly idVenta: number;

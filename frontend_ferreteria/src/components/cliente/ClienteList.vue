@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup lang="ts"> 
 import http from '@/plugins/axios'
 import { ref, onMounted, computed } from 'vue'
 import { Dialog, InputGroup, InputGroupAddon, InputText } from 'primevue'
@@ -48,10 +48,15 @@ async function eliminar() {
   mostrarConfirmDialog.value = false
 }
 
+function buscarPorCi(ci: string) {
+  console.log('Buscando cliente por CI:', ci)
+  return clientes.value.find(cliente => cliente.ciNit.toLowerCase() === ci.toLowerCase())
+}
+
 onMounted(() => {
   obtenerLista()
 })
-defineExpose({ obtenerLista })
+defineExpose({ obtenerLista, buscarPorCi })
 </script>
 
 <template>

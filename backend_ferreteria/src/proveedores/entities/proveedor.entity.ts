@@ -17,7 +17,7 @@ export class Proveedor {
   @Column('varchar', { name: 'razon_social' })
   razonSocial: string;
 
-  @Column('varchar', { length: 12, name: 'ci_nit'})
+  @Column('varchar', { length: 12, name: 'ci_nit' })
   ciNit: string;
 
   @Column('integer')

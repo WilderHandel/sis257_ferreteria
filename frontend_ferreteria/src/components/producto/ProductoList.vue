@@ -54,7 +54,7 @@ async function eliminar() {
 onMounted(() => {
   obtenerLista()
 })
-defineExpose({ obtenerLista })
+defineExpose({ productos, obtenerLista })
 </script>
 
 <template>

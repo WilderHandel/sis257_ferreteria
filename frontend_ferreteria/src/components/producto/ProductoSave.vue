@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup lang="ts"> 
 import type { Producto } from '@/models/producto'
 import type { Categoria } from '@/models/categoria'
 import type { Proveedor } from '@/models/proveedor'
