@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Proveedor } from '@/models/proveedor'
+import type { Categoria } from '@/models/categoria'
 import http from '@/plugins/axios'
 import { Dialog, InputGroup, InputGroupAddon, InputText } from 'primevue'
 import Button from 'primevue/button'
@@ -7,43 +7,42 @@ import { computed, onMounted, ref } from 'vue'
 import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
 
-const ENDPOINT = 'proveedores'
-const proveedores = ref<Proveedor[]>([])
+const ENDPOINT = 'categorias'
+const categorias = ref<Categoria[]>([])
 const emit = defineEmits(['edit'])
-const proveedorDelete = ref<Proveedor | null>(null)
+const categoriaDelete = ref<Categoria | null>(null)
 const mostrarConfirmDialog = ref<boolean>(false)
 const busqueda = ref<string>('')
 
 async function obtenerLista() {
    try {
     const response = await http.get(ENDPOINT)
-    console.log('Proveedores obtenidos:', response.data)
-    proveedores.value = response.data
+    console.log('Categorías obtenidas:', response.data)
+    categorias.value = response.data
   } catch (error) {
-    console.error('Error al obtener proveedores:', error)
+    console.error('Error al obtener categorías:', error)
   }
 }
 
-const proveedoresFiltrados = computed(() => {
-  return proveedores.value.filter(
-    (proveedor) =>
-      proveedor.razonSocial.toLowerCase().includes(busqueda.value.toLowerCase()) ||
-      proveedor.ciNit.toLowerCase().includes(busqueda.value.toLowerCase()) ||
-      proveedor.representante.toLowerCase().includes(busqueda.value.toLowerCase()),
+const categoriasFiltradas = computed(() => {
+  return categorias.value.filter(
+    (categoria) =>
+      categoria.nombre.toLowerCase().includes(busqueda.value.toLowerCase()) ||
+      categoria.descripcion.toLowerCase().includes(busqueda.value.toLowerCase())
   )
 })
 
-function emitirEdicion(proveedor: Proveedor) {
-  emit('edit', proveedor)
+function emitirEdicion(categoria: Categoria) {
+  emit('edit', categoria)
 }
 
-function mostrarEliminarConfirm(proveedor: Proveedor) {
-  proveedorDelete.value = proveedor
+function mostrarEliminarConfirm(categoria: Categoria) {
+  categoriaDelete.value = categoria
   mostrarConfirmDialog.value = true
 }
 
 async function eliminar() {
-  await http.delete(`${ENDPOINT}/${proveedorDelete.value?.id}`)
+  await http.delete(`${ENDPOINT}/${categoriaDelete.value?.id}`)
   obtenerLista()
   mostrarConfirmDialog.value = false
 }
@@ -62,16 +61,13 @@ defineExpose({ obtenerLista })
         <InputText
           v-model="busqueda"
           type="text"
-          placeholder="Buscar por Razón Social, CI, NIT o Representante"
+          placeholder="Buscar por Nombre o Descripción"
         />
       </InputGroup>
     </div>
- <DataTable :value="proveedoresFiltrados" paginator scrollable scrollHeight="flex" :rows="5" :rowsPerPageOptions="[5, 10, 20]" tableStyle="min-width: 50rem">
-      <Column field="razonSocial" header="Razón Social" sortable />
-      <Column field="ciNit" header="CI/NIT" sortable />
-      <Column field="telefono" header="Teléfono" />
-      <Column field="direccion" header="Dirección" />
-      <Column field="representante" header="Representante" />
+ <DataTable :value="categoriasFiltradas" paginator scrollable scrollHeight="flex" :rows="5" :rowsPerPageOptions="[5, 10, 20]" tableStyle="min-width: 50rem">
+      <Column field="nombre" header="Nombre" sortable />
+      <Column field="descripcion" header="Descripción" sortable />
       <Column header="Acciones" frozen alignFrozen="right" style="min-width: 120px">
         <template #body="{ data }">
           <Button icon="pi pi-pencil" aria-label="Editar" text @click="emitirEdicion(data)" />
@@ -91,7 +87,7 @@ defineExpose({ obtenerLista })
       header="Confirmar Eliminación"
       :style="{ width: '25rem' }"
     >
-      <p>¿Estás seguro de que deseas eliminar este proveedor?</p>
+      <p>¿Estás seguro de que deseas eliminar esta categoría?</p>
       <div class="flex justify-end gap-2">
         <Button
           type="button"
