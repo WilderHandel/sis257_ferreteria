@@ -122,7 +122,12 @@ async function handleSave() {
           label="Cancelar"
           icon="pi pi-times"
           severity="secondary"
-          @click="() => { limpiarFormulario(); dialogVisible = false }"
+          @click="
+            () => {
+              limpiarFormulario()
+              dialogVisible = false
+            }
+          "
         ></Button>
         <Button type="button" label="Guardar" icon="pi pi-save" @click="handleSave"></Button>
       </div>
