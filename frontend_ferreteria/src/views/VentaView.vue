@@ -8,6 +8,7 @@ import Dropdown from 'primevue/dropdown'
 import Dialog from 'primevue/dialog'
 import { ref, computed } from 'vue'
 import axios from 'axios'
+const token = localStorage.getItem('token')
 
 const ci = ref('')
 const nombreCliente = ref('')
@@ -17,7 +18,7 @@ const productoListRef = ref<typeof ProductoList | null>(null)
 const clienteListRef = ref<typeof ClienteList | null>(null)
 const productoSeleccionado = ref<any>(null)
 const cantidad = ref(1)
-const detalleVenta = ref<Array<{ producto: any, cantidad: number }>>([])
+const detalleVenta = ref<Array<{ producto: any; cantidad: number }>>([])
 const dineroRecibido = ref(0)
 
 // Buscar cliente por CI al hacer click en el botón
@@ -29,7 +30,7 @@ async function buscarClientePorCI() {
     return
   }
   // Asegúrate de que la lista esté cargada antes de buscar
-  await clienteListRef.value?.obtenerLista();
+  await clienteListRef.value?.obtenerLista()
   const cliente = clienteListRef.value?.buscarPorCi(ci.value)
   if (cliente) {
     nombreCliente.value = cliente.nombre
@@ -58,22 +59,22 @@ function handleSelect(producto: any) {
 function agregarProducto() {
   if (productoSeleccionado.value && cantidad.value > 0) {
     if (cantidad.value > productoSeleccionado.value.saldo) {
-      alert('La cantidad solicitada excede la cantidad disponible.');
-      return;
+      alert('La cantidad solicitada excede la cantidad disponible.')
+      return
     }
     const existente = detalleVenta.value.find(
-      d => d.producto.id === productoSeleccionado.value.id
+      (d) => d.producto.id === productoSeleccionado.value.id,
     )
     if (existente) {
       if (existente.cantidad + cantidad.value > productoSeleccionado.value.saldo) {
-        alert('La cantidad total en el detalle excede la cantidad disponible.');
-        return;
+        alert('La cantidad total en el detalle excede la cantidad disponible.')
+        return
       }
       existente.cantidad += cantidad.value
     } else {
       detalleVenta.value.push({
         producto: productoSeleccionado.value,
-        cantidad: cantidad.value
+        cantidad: cantidad.value,
       })
     }
     productoSeleccionado.value = null
@@ -88,27 +89,23 @@ function quitarProducto(index: number) {
 
 // Calcula el total de la venta
 const total = computed(() =>
-  detalleVenta.value.reduce(
-    (sum, d) => sum + d.producto.precioVenta * d.cantidad, 0
-  )
+  detalleVenta.value.reduce((sum, d) => sum + d.producto.precioVenta * d.cantidad, 0),
 )
 
 // Calcula el cambio
 const cambio = computed(() =>
-  dineroRecibido.value > total.value
-    ? dineroRecibido.value - total.value
-    : 0
+  dineroRecibido.value > total.value ? dineroRecibido.value - total.value : 0,
 )
 
 // Finaliza la venta (simulado)
 function finalizarVenta() {
   if (!ci.value || !nombreCliente.value || detalleVenta.value.length === 0) {
     alert('Completa todos los campos y agrega al menos un producto.')
-    return;
+    return
   }
   if (dineroRecibido.value < total.value) {
     alert('El dinero recibido no es suficiente para pagar el total.')
-    return;
+    return
   }
   alert('Venta realizada con éxito')
   ci.value = ''
@@ -127,7 +124,7 @@ async function guardarVenta() {
   }
 
   // Busca el cliente para obtener el idCliente
-  await clienteListRef.value?.obtenerLista();
+  await clienteListRef.value?.obtenerLista()
   const cliente = clienteListRef.value?.buscarPorCi(ci.value)
   if (!cliente) {
     alert('Cliente no encontrado.')
@@ -135,16 +132,37 @@ async function guardarVenta() {
   }
 
   // Aquí debes obtener el idUsuario (puedes ajustarlo según tu lógica de autenticación)
-  const idUsuario = 1 // <-- Ajusta esto según tu sistema de usuarios
+  const idUsuario = 3 // <-- Ajusta esto según tu sistema de usuarios
 
   try {
-    await axios.post('/api/ventas', {
-      idCliente: cliente.id,
-      idUsuario: idUsuario,
-      fecha: new Date().toISOString().substring(0, 10), // formato YYYY-MM-DD
-      transaccion: 1, // Puedes ajustar este valor según tu lógica
-      cantidad: detalleVenta.value.reduce((sum, d) => sum + d.cantidad, 0)
-    })
+    console.log('Datos enviados:', {
+  idCliente: cliente.id,
+  idUsuario: idUsuario,
+  fecha: new Date().toISOString().substring(0, 10),
+  transaccion: 1,
+  cantidad: detalleVenta.value.reduce((sum, d) => sum + d.cantidad, 0),
+  detalle: detalleVenta.value.map((d) => ({
+    idProducto: d.producto.id,
+    cantidad: d.cantidad,
+    precioVenta: d.producto.precioVenta,
+  })),
+})
+    await axios.post(
+      'http://localhost:3000/api/v1/ventas',
+      {
+        idCliente: cliente.id,
+        idUsuario: idUsuario,
+        fecha: new Date().toISOString().substring(0, 10),
+        transaccion: 1,
+        cantidad: detalleVenta.value.reduce((sum, d) => sum + d.cantidad, 0),
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    )
+
     alert('Venta guardada con éxito')
     // Limpia los campos
     ci.value = ''
@@ -170,14 +188,18 @@ async function guardarVenta() {
       <InputText v-model="nombreCliente" class="ml-2" :readonly="nombreClienteReadonly" />
     </div>
 
-    <Dialog v-model:visible="mostrarDialogCliente" header="Buscar Cliente" :style="{ width: '60vw' }">
+    <Dialog
+      v-model:visible="mostrarDialogCliente"
+      header="Buscar Cliente"
+      :style="{ width: '60vw' }"
+    >
       <ClienteList @edit="handleClienteSeleccionado" />
     </Dialog>
 
-    <div style="display: none;">
+    <div style="display: none">
       <ProductoList ref="productoListRef" @select="handleSelect" />
     </div>
-    <div style="display: none;">
+    <div style="display: none">
       <ClienteList ref="clienteListRef" />
     </div>
     <div class="mb-3 flex align-items-center">
@@ -216,7 +238,13 @@ async function guardarVenta() {
           <td>{{ item.producto.precioVenta }}</td>
           <td>{{ item.producto.precioVenta * item.cantidad }}</td>
           <td>
-            <Button icon="pi pi-trash" severity="danger" @click="quitarProducto(idx)" rounded text />
+            <Button
+              icon="pi pi-trash"
+              severity="danger"
+              @click="quitarProducto(idx)"
+              rounded
+              text
+            />
           </td>
         </tr>
       </tbody>
@@ -236,12 +264,32 @@ async function guardarVenta() {
 </template>
 
 <style scoped>
-.mb-3 { margin-bottom: 1rem; }
-.mt-3 { margin-top: 1rem; }
-.ml-2 { margin-left: 0.5rem; }
-.mr-2 { margin-right: 0.5rem; }
-.flex { display: flex; }
-.align-items-center { align-items: center; }
-.p-datatable-table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
-.p-datatable-table th, .p-datatable-table td { border: 1px solid #ccc; padding: 0.5rem; }
+.mb-3 {
+  margin-bottom: 1rem;
+}
+.mt-3 {
+  margin-top: 1rem;
+}
+.ml-2 {
+  margin-left: 0.5rem;
+}
+.mr-2 {
+  margin-right: 0.5rem;
+}
+.flex {
+  display: flex;
+}
+.align-items-center {
+  align-items: center;
+}
+.p-datatable-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+.p-datatable-table th,
+.p-datatable-table td {
+  border: 1px solid #ccc;
+  padding: 0.5rem;
+}
 </style>

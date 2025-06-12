@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
 import { useRoute } from 'vue-router'
-import { useAuthStore } from "@/stores/index";
-const authStore = useAuthStore();
+import { useAuthStore } from '@/stores/index'
+const authStore = useAuthStore()
 const route = useRoute()
 </script>
 
@@ -82,7 +82,11 @@ const route = useRoute()
                       <li>
                         <RouterLink to="/ventas">Ventas</RouterLink>
                       </li>
-                      <li><a @click.prevent="authStore.logout()" class="text-danger" href="#">Salir</a></li>
+                      <li>
+                        <a @click.prevent="authStore.logout()" class="text-danger" href="#"
+                          >Salir</a
+                        >
+                      </li>
                     </template>
                   </ul>
                 </nav>
@@ -118,7 +122,8 @@ const route = useRoute()
             </div>
           </div>
           <div class="carousel-item">
-            <RouterLink to="/"><img class="second-slide" src="@/assets/images/banner2.jpg" alt="Second slide" />
+            <RouterLink to="/"
+              ><img class="second-slide" src="@/assets/images/banner2.jpg" alt="Second slide" />
             </RouterLink>
             <div class="container">
               <div class="carousel-caption relative">
