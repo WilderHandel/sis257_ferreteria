@@ -96,9 +96,6 @@ const route = useRoute()
               </div>
             </div>
           </div>
-          <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2">
-            <RouterLink to="/login" class="buy">Iniciar Sesión</RouterLink>
-          </div>
         </div>
       </div>
       <!-- end header inner -->
