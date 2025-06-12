@@ -132,7 +132,7 @@ async function guardarVenta() {
   }
 
   // Aquí debes obtener el idUsuario (puedes ajustarlo según tu lógica de autenticación)
-  const idUsuario = 3 // <-- Ajusta esto según tu sistema de usuarios
+  const idUsuario = 4 // <-- Ajusta esto según tu sistema de usuarios
 
   try {
     console.log('Datos enviados:', {
