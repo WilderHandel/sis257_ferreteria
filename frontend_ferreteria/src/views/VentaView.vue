@@ -14,6 +14,8 @@ const ci = ref('')
 const nombreCliente = ref('')
 const nombreClienteReadonly = ref(true)
 const mostrarDialogCliente = ref(false)
+const mostrarDialogCrearCliente = ref(false)
+const nuevoCliente = ref({ nombre: '', ciNit: ci.value })
 const productoListRef = ref<typeof ProductoList | null>(null)
 const clienteListRef = ref<typeof ClienteList | null>(null)
 const productoSeleccionado = ref<any>(null)
@@ -123,54 +125,81 @@ async function guardarVenta() {
     return
   }
 
-  // Busca el cliente para obtener el idCliente
   await clienteListRef.value?.obtenerLista()
-  const cliente = clienteListRef.value?.buscarPorCi(ci.value)
+  let cliente = clienteListRef.value?.buscarPorCi(ci.value)
   if (!cliente) {
-    alert('Cliente no encontrado.')
-    return
+    // Crear cliente automáticamente
+    cliente = await crearClienteAutomatico()
+    if (!cliente) return
   }
 
-  // Aquí debes obtener el idUsuario (puedes ajustarlo según tu lógica de autenticación)
-  const idUsuario = 4 // <-- Ajusta esto según tu sistema de usuarios
+  // Aquí debes obtener el idUsuario autenticado
+  // Por ejemplo, usando Pinia:
+  // import { useAuthStore } from '@/stores/index'
+  // const authStore = useAuthStore()
+  // const idUsuario = authStore.user?.id
+  const idUsuario = 3 // <-- Ajusta esto según tu sistema de usuarios
+  const transaccion = Date.now()
 
   try {
-    console.log('Datos enviados:', {
-  idCliente: cliente.id,
-  idUsuario: idUsuario,
-  fecha: new Date().toISOString().substring(0, 10),
-  transaccion: 1,
-  cantidad: detalleVenta.value.reduce((sum, d) => sum + d.cantidad, 0),
-  detalle: detalleVenta.value.map((d) => ({
-    idProducto: d.producto.id,
-    cantidad: d.cantidad,
-    precioVenta: d.producto.precioVenta,
-  })),
-})
     await axios.post(
       'http://localhost:3000/api/v1/ventas',
       {
         idCliente: cliente.id,
         idUsuario: idUsuario,
         fecha: new Date().toISOString().substring(0, 10),
-        transaccion: 1,
-        cantidad: detalleVenta.value.reduce((sum, d) => sum + d.cantidad, 0),
+        transaccion: transaccion,
+        cantidad: detalleVenta.value.reduce((sum, item) => sum + item.cantidad, 0), // suma total
+        detalle: detalleVenta.value.map(item => ({
+          idProducto: item.producto.id,
+          cantidad: item.cantidad
+        }))
       },
       {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      },
+      }
     )
 
     alert('Venta guardada con éxito')
-    // Limpia los campos
     ci.value = ''
     nombreCliente.value = ''
     detalleVenta.value = []
     dineroRecibido.value = 0
+
+    await clienteListRef.value?.obtenerLista()
+    await productoListRef.value?.obtenerLista()
   } catch (error) {
     alert('Error al guardar la venta')
+  }
+}
+async function onClienteCreado() {
+  mostrarDialogCrearCliente.value = false
+  // Recarga la lista de clientes y vuelve a intentar guardar la venta
+  await clienteListRef.value?.obtenerLista()
+  guardarVenta()
+}
+async function crearClienteAutomatico() {
+  try {
+    const response = await axios.post(
+      'http://localhost:3000/api/v1/clientes',
+      {
+        nombre: nombreCliente.value,
+        ciNit: ci.value,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )
+    // Recarga la lista de clientes y retorna el nuevo cliente
+    await clienteListRef.value?.obtenerLista()
+    return response.data
+  } catch (error) {
+    alert('No se pudo crear el cliente automáticamente')
+    throw error
   }
 }
 </script>
@@ -194,6 +223,19 @@ async function guardarVenta() {
       :style="{ width: '60vw' }"
     >
       <ClienteList @edit="handleClienteSeleccionado" />
+    </Dialog>
+
+    <Dialog
+      v-model:visible="mostrarDialogCrearCliente"
+      header="Crear Cliente"
+      :style="{ width: '30vw' }"
+    >
+      <ClienteSave
+        :mostrar="mostrarDialogCrearCliente"
+        :cliente="nuevoCliente"
+        @guardar="onClienteCreado"
+        @close="mostrarDialogCrearCliente = false"
+      />
     </Dialog>
 
     <div style="display: none">
