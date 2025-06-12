@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup lang="ts"> 
 import type { Cliente } from '@/models/cliente'
 import http from '@/plugins/axios'
 import Button from 'primevue/button'
