@@ -1,7 +1,5 @@
 <script setup lang="ts">
 import VentaDetalleList from '@/components/ventadetalle/VentaDetalleList.vue'
-import VentaDetalleSave from '@/components/ventadetalle/VentaDetalleSave.vue'
-import Button from 'primevue/button'
 import { ref } from 'vue'
 
 const mostrarDialog = ref(false)
@@ -30,15 +28,7 @@ function handleGuardar() {
 <template>
   <div class="m-7">
     <h2>Ventas Detalles</h2>
-    <Button label="Crear Nuevo" icon="pi pi-plus" @click="handleCreate" />
     <VentaDetalleList ref="ventadetalleListRef" @edit="handleEdit" />
-    <VentaDetalleSave
-      :mostrar="mostrarDialog"
-      :ventadetalle="ventadetalleEdit"
-      :modoEdicion="!!ventadetalleEdit"
-      @guardar="handleGuardar"
-      @close="handleCloseDialog"
-    />
   </div>
 </template>
 
