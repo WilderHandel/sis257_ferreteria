@@ -83,9 +83,6 @@ const route = useRoute()
                         <RouterLink to="/ventas">Ventas</RouterLink>
                       </li>
                       <li>
-                        <RouterLink to="/ventadetalle">Ventas Detalles</RouterLink>
-                      </li>
-                      <li>
                         <a @click.prevent="authStore.logout()" class="text-danger" href="#"
                           >Salir</a
                         >
