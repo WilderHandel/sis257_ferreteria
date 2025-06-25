@@ -1,10 +1,29 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { ref, onMounted } from 'vue'
+import axios from 'axios'
+const token = localStorage.getItem('token')
+
+const productos = ref([])
+
+onMounted(async () => {
+  try {
+    const res = await axios.get('http://localhost:3000/api/v1/productos', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    productos.value = res.data
+    console.log('Productos:', productos.value)
+  } catch (err) {
+    console.error('Error al obtener productos:', err)
+  }
+})
+</script>
 
 <template>
   <section class="slider_section">
     <div id="main_slider" class="carousel slide banner-main" data-ride="carousel">
       <div class="carousel-inner">
-
         <div class="carousel-item active">
           <img src="@/assets/images/banner2.jpg" alt="banner" />
 
@@ -186,8 +205,10 @@
         <div class="col-md-12">
           <div class="title">
             <h2>Nuestros <strong class="black">Productos</strong></h2>
-            <span>Empaquetamos los productos con los mejores servicios para convertirlo en un cliente
-              feliz.</span>
+            <span
+              >Empaquetamos los productos con los mejores servicios para convertirlo en un cliente
+              feliz.</span
+            >
           </div>
         </div>
       </div>
@@ -196,64 +217,22 @@
   <div class="product-bg">
     <div class="product-bg-white">
       <div class="container">
-        <div class="row">
-          <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12">
-            <div class="product-box">
-              <i><img src="@/assets/icon/p1.png" /></i>
-              <h3>Norton Internet Security</h3>
-              <span>$25.00</span>
-            </div>
-          </div>
-          <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12">
-            <div class="product-box">
-              <i><img src="@/assets/icon/p2.png" /></i>
-              <h3>Norton Internet Security</h3>
-              <span>$25.00</span>
-            </div>
-          </div>
-          <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12">
-            <div class="product-box">
-              <i><img src="@/assets/icon/p3.png" /></i>
-              <h3>Norton Internet Security</h3>
-              <span>$25.00</span>
-            </div>
-          </div>
-          <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12">
-            <div class="product-box">
-              <i><img src="@/assets/icon/p4.png" /></i>
-              <h3>Norton Internet Security</h3>
-              <span>$25.00</span>
-            </div>
-          </div>
-          <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12">
-            <div class="product-box">
-              <i><img src="@/assets/icon/p5.png" /></i>
-              <h3>Norton Internet Security</h3>
-              <span>$25.00</span>
-            </div>
-          </div>
-          <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12">
-            <div class="product-box">
-              <i><img src="@/assets/icon/p2.png" /></i>
-              <h3>Norton Internet Security</h3>
-              <span>$25.00</span>
-            </div>
-          </div>
-          <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12">
-            <div class="product-box">
-              <i><img src="@/assets/icon/p6.png" /></i>
-              <h3>Norton Internet Security</h3>
-              <span>$25.00</span>
-            </div>
-          </div>
-          <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12">
-            <div class="product-box">
-              <i><img src="@/assets/icon/p7.png" /></i>
-              <h3>Norton Internet Security</h3>
-              <span>$25.00</span>
-            </div>
-          </div>
+  <div class="row">
+    <div class="col-md-4" v-for="producto in productos" :key="producto.id">
+      <div class="card mb-4">
+        <i><img
+          :src="producto.fotografia"
+          class="card-img-top"
+          :alt="producto.descripcion"
+          v-if="producto.fotografia"
+        /></i>
+        <div class="product-box">
+          <h3 class="card-text">{{ producto.descripcion }}</h3>
+          <span class="card-text">Bs. {{ producto.precioVenta }}</span>
         </div>
+      </div>
+    </div>
+  </div>
       </div>
     </div>
     <div class="Clients_bg_white">
@@ -276,8 +255,11 @@
               <div class="container">
                 <div class="carousel-caption text-bg">
                   <div class="img_bg">
-                    <i><img src="@/assets/images/lllll.png" /><span>Jone Due<br /><strong
-                          class="date">12/02/2019</strong></span></i>
+                    <i
+                      ><img src="@/assets/images/lllll.png" /><span
+                        >Jone Due<br /><strong class="date">12/02/2019</strong></span
+                      ></i
+                    >
                   </div>
 
                   <p>
@@ -292,8 +274,11 @@
               <div class="container">
                 <div class="carousel-caption text-bg">
                   <div class="img_bg">
-                    <i><img src="@/assets/images/lllll.png" /><span>Camilo Natfan<br /><strong
-                          class="date">12/09/2019</strong></span></i>
+                    <i
+                      ><img src="@/assets/images/lllll.png" /><span
+                        >Camilo Natfan<br /><strong class="date">12/09/2019</strong></span
+                      ></i
+                    >
                   </div>
                   <p>
                     "Muy satisfecho con la compra de herramientas para mi taller. Tienen de todo y
@@ -307,8 +292,11 @@
               <div class="container">
                 <div class="carousel-caption text-bg">
                   <div class="img_bg">
-                    <i><img src="@/assets/images/lllll.png" /><span>Maria del Rosario<br /><strong
-                          class="date">15/08/2019</strong></span></i>
+                    <i
+                      ><img src="@/assets/images/lllll.png" /><span
+                        >Maria del Rosario<br /><strong class="date">15/08/2019</strong></span
+                      ></i
+                    >
                   </div>
                   <p>
                     "Fue mi primera vez comprando en esta ferretería y quedé encantado. La variedad
