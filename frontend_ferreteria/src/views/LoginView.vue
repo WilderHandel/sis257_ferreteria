@@ -1,4 +1,4 @@
-<script setup lang="ts"> 
+<script setup lang="ts">
 import { ref } from 'vue'
 import { useAuthStore } from '@/stores/index'
 
@@ -30,41 +30,56 @@ function onSubmit() {
 
 <style>
 .form {
-  margin: 1.5rem auto;
+  margin: 2rem auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 20%;
-  min-width: 350px;
-  max-width: 100%;
-  background: rgba(19, 35, 47, 0.9);
-  border-radius: 5px;
-  padding: 40px;
-  box-shadow: 0 4px 10px 4px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  max-width: 400px;
+  background-color: #0f0f0f;
+  border-radius: 1rem;
+  padding: 2.5rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
 }
 
 .form-label {
-  margin-top: 2rem;
-  color: white;
-  margin-bottom: 0.5rem;
+  margin-top: 1.5rem;
+  color: #f1f5f9;
+  font-weight: 500;
+  font-size: 0.95rem;
 }
 
 .form-input {
-  padding: 10px 15px;
-  background: none;
-  background-image: none;
-  border: 1px solid white;
+  margin-top: 0.5rem;
+  padding: 0.75rem 1rem;
+  background-color: transparent;
+  border: 1px solid #cbd5e1;
+  border-radius: 0.5rem;
   color: white;
+  transition: border-color 0.3s, background-color 0.3s;
+}
+
+.form-input:focus {
+  border-color: #f97316;
+  background-color: #222425 ;
+  outline: none;
 }
 
 .form-submit {
-  background: #ee5007;
+  background:   #ffb120 ;
   border: none;
-  border-radius: 5rem;
+  border-radius: 2rem;
   color: white;
-  margin-top: 3rem;
-  padding: 1rem 0;
+  margin-top: 2.5rem;
+  padding: 0.9rem 0;
+  font-size: 1rem;
+  font-weight: 600;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: background-color 0.3s ease;
 }
+
+.form-submit:hover {
+  background-color: #e49400;
+}
+
 </style>

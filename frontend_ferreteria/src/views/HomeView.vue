@@ -2,70 +2,68 @@
 
 <template>
   <section class="slider_section">
-      <div id="main_slider" class="carousel slide banner-main" data-ride="carousel">
-        <div class="carousel-inner">
-          <div class="carousel-item active">
+    <div id="main_slider" class="carousel slide banner-main" data-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <div class="container">
             <RouterLink to="/"><img src="@/assets/images/banner2.jpg" alt="banner" /></RouterLink>
-            <div class="container">
-              <div class="carousel-caption relative">
-                <h1>
-                  Nuestro <br />
-                  <strong class="black_bold">Último </strong><br />
-                  <strong class="yellow_bold">Producto </strong>
-                </h1>
-                <p>
-                  Herramientas de calidad<br />
-                  todos los productos al alcance del consumidor
-                </p>
-                <a href="#">Ver más Productos</a>
-              </div>
-            </div>
-          </div>
-          <div class="carousel-item">
-            <RouterLink to="/"
-              ><img class="second-slide" src="@/assets/images/banner2.jpg" alt="Second slide" />
-            </RouterLink>
-            <div class="container">
-              <div class="carousel-caption relative">
-                <h1>
-                  Nuestro <br />
-                  <strong class="black_bold">Último </strong><br />
-                  <strong class="yellow_bold">Producto </strong>
-                </h1>
-                <p>
-                  Herramientas de calidad<br />
-                  todo los productos al alcance del consumidor
-                </p>
-                <a href="#">Ver más Productos</a>
-              </div>
-            </div>
-          </div>
-          <div class="carousel-item">
-            <RouterLink to="/"><img src="@/assets/images/banner2.jpg" alt="banner" /></RouterLink>
-            <div class="container">
-              <div class="carousel-caption relative">
-                <h1>
-                  Nuestro <br />
-                  <strong class="black_bold">Último </strong><br />
-                  <strong class="yellow_bold">Producto </strong>
-                </h1>
-                <p>
-                  Herramientas de calidad<br />
-                  todo los productos al alcance del consumidor
-                </p>
-                <a href="#">Ver más Productos</a>
-              </div>
+            <div class="carousel-caption relative">
+              <h1>
+                Nuestro <br />
+                <strong class="black_bold">Último </strong><br />
+                <strong class="yellow_bold">Producto </strong>
+              </h1>
+              <p>
+                Herramientas de calidad<br />
+                todos los productos al alcance del consumidor
+              </p>
+              <a href="#">Ver más Productos</a>
             </div>
           </div>
         </div>
-        <a class="carousel-control-prev" href="#main_slider" role="button" data-slide="prev">
-          <i class="fa fa-angle-right"></i>
-        </a>
-        <a class="carousel-control-next" href="#main_slider" role="button" data-slide="next">
-          <i class="fa fa-angle-left"></i>
-        </a>
+        <div class="carousel-item">
+          <div class="container">
+            <RouterLink to="/"><img class="second-slide" src="@/assets/images/banner2.jpg" alt="Second slide" /></RouterLink>
+            <div class="carousel-caption relative">
+              <h1>
+                Nuestro <br />
+                <strong class="black_bold">Último </strong><br />
+                <strong class="yellow_bold">Producto </strong>
+              </h1>
+              <p>
+                Herramientas<br />
+                todo los productos al alcance del consumidor
+              </p>
+              <a href="#">Ver más Productos</a>
+            </div>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <RouterLink to="/"><img src="@/assets/images/banner2.jpg" alt="banner" /></RouterLink>
+          <div class="container">
+            <div class="carousel-caption relative">
+              <h1>
+                Nuestro <br />
+                <strong class="black_bold">Último </strong><br />
+                <strong class="yellow_bold">Producto </strong>
+              </h1>
+              <p>
+                Herramientas de calidad<br />
+                todo los productos al alcance del consumidor
+              </p>
+              <a href="#">Ver más Productos</a>
+            </div>
+          </div>
+        </div>
       </div>
-    </section>
+      <a class="carousel-control-prev" href="#main_slider" role="button" data-slide="prev">
+        <i class="fa fa-angle-right"></i>
+      </a>
+      <a class="carousel-control-next" href="#main_slider" role="button" data-slide="next">
+        <i class="fa fa-angle-left"></i>
+      </a>
+    </div>
+  </section>
   <div class="whyschose">
     <div class="container">
       <div class="row">
@@ -188,10 +186,8 @@
         <div class="col-md-12">
           <div class="title">
             <h2>Nuestros <strong class="black">Productos</strong></h2>
-            <span
-              >Empaquetamos los productos con los mejores servicios para convertirlo en un cliente
-              feliz.</span
-            >
+            <span>Empaquetamos los productos con los mejores servicios para convertirlo en un cliente
+              feliz.</span>
           </div>
         </div>
       </div>
@@ -280,11 +276,8 @@
               <div class="container">
                 <div class="carousel-caption text-bg">
                   <div class="img_bg">
-                    <i
-                      ><img src="@/assets/images/lllll.png" /><span
-                        >Jone Due<br /><strong class="date">12/02/2019</strong></span
-                      ></i
-                    >
+                    <i><img src="@/assets/images/lllll.png" /><span>Jone Due<br /><strong
+                          class="date">12/02/2019</strong></span></i>
                   </div>
 
                   <p>
@@ -299,11 +292,8 @@
               <div class="container">
                 <div class="carousel-caption text-bg">
                   <div class="img_bg">
-                    <i
-                      ><img src="@/assets/images/lllll.png" /><span
-                        >Camilo Natfan<br /><strong class="date">12/09/2019</strong></span
-                      ></i
-                    >
+                    <i><img src="@/assets/images/lllll.png" /><span>Camilo Natfan<br /><strong
+                          class="date">12/09/2019</strong></span></i>
                   </div>
                   <p>
                     "Muy satisfecho con la compra de herramientas para mi taller. Tienen de todo y
@@ -317,11 +307,8 @@
               <div class="container">
                 <div class="carousel-caption text-bg">
                   <div class="img_bg">
-                    <i
-                      ><img src="@/assets/images/lllll.png" /><span
-                        >Maria del Rosario<br /><strong class="date">15/08/2019</strong></span
-                      ></i
-                    >
+                    <i><img src="@/assets/images/lllll.png" /><span>Maria del Rosario<br /><strong
+                          class="date">15/08/2019</strong></span></i>
                   </div>
                   <p>
                     "Fue mi primera vez comprando en esta ferretería y quedé encantado. La variedad

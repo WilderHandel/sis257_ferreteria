@@ -51,42 +51,28 @@ const authStore = useAuthStore()
             </div>
           </div>
           <div class="col-xl-7 col-lg-7 col-md-9 col-sm-9">
-            <div class="menu-area">
+            <div class="navbar">
               <div class="limit-box">
-                <nav class="main-menu">
-                  <ul class="menu-area-main">
-                    <li>
-                      <RouterLink to="/">Inicio</RouterLink>
-                    </li>
-                    <li v-if="!authStore.token">
-                      <RouterLink to="/login">Iniciar Sesión</RouterLink>
-                    </li>
-                    <template v-else>
-                      <li>
-                        <RouterLink to="/about">Acerca de</RouterLink>
-                      </li>
-                      <li>
+                <nav class="nav-links">
+                  <RouterLink to="/">Inicio</RouterLink>
+                  <template v-if="!authStore.token">
+                    <RouterLink to="/login">Iniciar Sesión</RouterLink>
+                  </template>
+                  <template v-else>
+                    <div class="dropdown">
+                      <span class="dropdown-toggle">Gestión</span>
+                      <div class="dropdown-menu">
                         <RouterLink to="/producto">Productos</RouterLink>
-                      </li>
-                      <li>
-                        <RouterLink to="/clientes">Clientes</RouterLink>
-                      </li>
-                      <li>
                         <RouterLink to="/proveedores">Proveedores</RouterLink>
-                      </li>
-                      <li>
-                        <RouterLink to="/categorias">Categorias</RouterLink>
-                      </li>
-                      <li>
-                        <RouterLink to="/ventas">Ventas</RouterLink>
-                      </li>
-                      <li>
-                        <a @click.prevent="authStore.logout()" class="text-danger" href="#"
-                          >Salir</a
-                        >
-                      </li>
-                    </template>
-                  </ul>
+                        <RouterLink to="/clientes">Clientes</RouterLink>
+                        <RouterLink to="/categorias">Categorías</RouterLink>
+                      </div>
+                    </div>
+                    <RouterLink to="/about">Acerca de</RouterLink>
+                    <RouterLink to="/ventas">Ventas</RouterLink>
+                    <span class="bienvenido">Bienvenido {{ authStore.user }}</span>
+                    <a @click="authStore.logout()" href="#">Cerrar Sesión</a>
+                  </template>
                 </nav>
               </div>
             </div>
