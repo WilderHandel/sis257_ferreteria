@@ -55,6 +55,7 @@ export class VentasDetallesService {
         idVenta: true, // necesario
         precioUnitario: true,
         total: true,
+        cantidad: true,
         producto: {
           id: true,
           codigo: true,

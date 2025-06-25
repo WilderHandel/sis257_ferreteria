@@ -291,6 +291,9 @@ async function crearClienteAutomatico() {
         </tr>
       </tbody>
     </table>
+    <div class="mt-2">
+      <strong>Total de productos vendidos: {{ detalleVenta.reduce((sum, item) => sum + item.cantidad, 0) }}</strong>
+    </div>
     <div class="mt-3">
       <strong>Total: {{ total }}</strong>
     </div>

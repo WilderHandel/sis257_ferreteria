@@ -13,6 +13,12 @@ const ventaDetalleDelete = ref<VentaDetalle | null>(null)
 const mostrarConfirmDialog = ref<boolean>(false)
 const busqueda = ref<string>('')
 
+function formatFecha(fecha?: string | Date) {
+  if (!fecha) return ''
+  if (typeof fecha === 'string') return fecha.substring(0, 10)
+  return fecha.toISOString().substring(0, 10)
+}
+
 async function obtenerLista() {
   try {
     const response = await http.get(ENDPOINT)
@@ -49,7 +55,13 @@ defineExpose({ obtenerLista })
     </div>
  <DataTable :value="ventasDetallesFiltrados" paginator scrollable scrollHeight="flex" :rows="5" :rowsPerPageOptions="[5, 10, 20]" tableStyle="min-width: 50rem">
       <Column field="producto.codigo" header="Código de Producto" sortable />
-      <Column field="venta.fecha" header="Fecha de Venta" sortable />
+      <Column header="Fecha de Venta" sortable>
+        <template #body="slotProps">
+          {{ formatFecha(slotProps.data.venta.fecha) }}
+        </template>
+      </Column>
+      <Column field="venta.cliente.nombre" header="Cliente" sortable />
+      <Column field="venta.idUsuario.usuario" header="Vendedor" sortable />
       <Column field="precioUnitario" header="Precio Unitario" />
       <Column field="total" header="Total" />
       <Column field="cantidad" header="Cantidad" />
