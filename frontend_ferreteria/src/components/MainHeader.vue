@@ -1,9 +1,7 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
-import { useRoute } from 'vue-router'
 import { useAuthStore } from '@/stores/index'
 const authStore = useAuthStore()
-const route = useRoute()
 </script>
 
 <template>
@@ -98,71 +96,6 @@ const route = useRoute()
       <!-- end header inner -->
     </header>
     <!-- end header -->
-    <section class="slider_section" v-if="route.path === '/'">
-      <div id="main_slider" class="carousel slide banner-main" data-ride="carousel">
-        <div class="carousel-inner">
-          <div class="carousel-item active">
-            <RouterLink to="/"><img src="@/assets/images/banner2.jpg" alt="banner" /></RouterLink>
-            <div class="container">
-              <div class="carousel-caption relative">
-                <h1>
-                  Nuestro <br />
-                  <strong class="black_bold">Último </strong><br />
-                  <strong class="yellow_bold">Producto </strong>
-                </h1>
-                <p>
-                  Herramientas de calidad<br />
-                  todos los productos al alcance del consumidor
-                </p>
-                <a href="#">Ver más Productos</a>
-              </div>
-            </div>
-          </div>
-          <div class="carousel-item">
-            <RouterLink to="/"
-              ><img class="second-slide" src="@/assets/images/banner2.jpg" alt="Second slide" />
-            </RouterLink>
-            <div class="container">
-              <div class="carousel-caption relative">
-                <h1>
-                  Nuestro <br />
-                  <strong class="black_bold">Último </strong><br />
-                  <strong class="yellow_bold">Producto </strong>
-                </h1>
-                <p>
-                  Herramientas de calidad<br />
-                  todo los productos al alcance del consumidor
-                </p>
-                <a href="#">Ver más Productos</a>
-              </div>
-            </div>
-          </div>
-          <div class="carousel-item">
-            <RouterLink to="/"><img src="@/assets/images/banner2.jpg" alt="banner" /></RouterLink>
-            <div class="container">
-              <div class="carousel-caption relative">
-                <h1>
-                  Nuestro <br />
-                  <strong class="black_bold">Último </strong><br />
-                  <strong class="yellow_bold">Producto </strong>
-                </h1>
-                <p>
-                  Herramientas de calidad<br />
-                  todo los productos al alcance del consumidor
-                </p>
-                <a href="#">Ver más Productos</a>
-              </div>
-            </div>
-          </div>
-        </div>
-        <a class="carousel-control-prev" href="#main_slider" role="button" data-slide="prev">
-          <i class="fa fa-angle-right"></i>
-        </a>
-        <a class="carousel-control-next" href="#main_slider" role="button" data-slide="next">
-          <i class="fa fa-angle-left"></i>
-        </a>
-      </div>
-    </section>
   </div>
 </template>
 
