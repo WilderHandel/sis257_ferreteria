@@ -54,34 +54,37 @@ const authStore = useAuthStore()
             <div class="navbar">
               <div class="limit-box">
                 <nav class="nav-links">
-                  <RouterLink to="/">Inicio</RouterLink>
-                  <template v-if="!authStore.token">
-                    <RouterLink to="/login">Iniciar Sesión</RouterLink>
-                  </template>
-                  <template v-else>
-                    <div class="dropdown">
-                      <span class="dropdown-toggle">Gestión</span>
-                      <div class="dropdown-menu">
-                        <RouterLink to="/producto">Productos</RouterLink>
-                        <RouterLink to="/proveedores">Proveedores</RouterLink>
+                  <ul class="menu-area-main">
+                    <li><RouterLink to="/">Inicio</RouterLink></li>
+                    <li><RouterLink to="/about">Acerca de</RouterLink></li>
 
-                        <RouterLink to="/clientes">Clientes</RouterLink>
-                        <RouterLink to="/categorias">Categorías</RouterLink>
-                      </div>
-                    </div>
-                    <RouterLink to="/about">Acerca de</RouterLink>
-                    <!-- Nueva dropdown para ventas -->
-                    <div class="dropdown">
-                      <span class="dropdown-toggle">Ventas</span>
-                      <div class="dropdown-menu">
-                        <RouterLink to="/ventas">Nueva Venta Venta</RouterLink>
-                        <RouterLink to="/venta-detalle">Detalle de Venta</RouterLink>
-                      </div>
-                    </div>
-                    <span class="bienvenido">Bienvenido {{ authStore.user }}</span>
-                    <a @click="authStore.logout()" href="#">Cerrar Sesión</a>
-                  </template>
+                    <template v-if="!authStore.token">
+                      <li><RouterLink to="/login">Iniciar Sesión</RouterLink></li>
+                    </template>
 
+                    <template v-else>
+                      <li class="dropdown">
+                        <span class="dropdown-toggle">Gestión</span>
+                        <div class="dropdown-menu">
+                          <RouterLink to="/producto">Productos</RouterLink>
+                          <RouterLink to="/proveedores">Proveedores</RouterLink>
+                          <RouterLink to="/clientes">Clientes</RouterLink>
+                          <RouterLink to="/categorias">Categorías</RouterLink>
+                        </div>
+                      </li>
+                      <li class="dropdown">
+                        <span class="dropdown-toggle">Ventas</span>
+                        <div class="dropdown-menu">
+                          <RouterLink to="/ventas">Nueva Venta</RouterLink>
+                          <RouterLink to="/venta-detalle">Detalle de Venta</RouterLink>
+                        </div>
+                      </li>
+                      <li>
+                        <span class="bienvenido">Bienvenido {{ authStore.user }}</span>
+                      </li>
+                      <li><a href="#" @click.prevent="authStore.logout()">Cerrar Sesión</a></li>
+                    </template>
+                  </ul>
                 </nav>
               </div>
             </div>
