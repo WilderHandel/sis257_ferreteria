@@ -4,26 +4,28 @@
   <section class="slider_section">
     <div id="main_slider" class="carousel slide banner-main" data-ride="carousel">
       <div class="carousel-inner">
+
         <div class="carousel-item active">
+          <img src="@/assets/images/banner2.jpg" alt="banner" />
+
           <div class="container">
-            <RouterLink to="/"><img src="@/assets/images/banner2.jpg" alt="banner" /></RouterLink>
             <div class="carousel-caption relative">
               <h1>
-                Nuestro <br />
-                <strong class="black_bold">Último </strong><br />
-                <strong class="yellow_bold">Producto </strong>
+                Nuestros <br />
+                <strong class="black_bold">Últimos </strong><br />
+                <strong class="yellow_bold">Productos </strong>
               </h1>
               <p>
                 Herramientas de calidad<br />
                 todos los productos al alcance del consumidor
               </p>
-              <a href="#">Ver más Productos</a>
             </div>
           </div>
         </div>
         <div class="carousel-item">
+          <img src="@/assets/images/banner2.jpg" alt="banner" />
+
           <div class="container">
-            <RouterLink to="/"><img class="second-slide" src="@/assets/images/banner2.jpg" alt="Second slide" /></RouterLink>
             <div class="carousel-caption relative">
               <h1>
                 Nuestro <br />
@@ -34,12 +36,11 @@
                 Herramientas<br />
                 todo los productos al alcance del consumidor
               </p>
-              <a href="#">Ver más Productos</a>
             </div>
           </div>
         </div>
         <div class="carousel-item">
-          <RouterLink to="/"><img src="@/assets/images/banner2.jpg" alt="banner" /></RouterLink>
+          <img src="@/assets/images/banner2.jpg" alt="banner" />
           <div class="container">
             <div class="carousel-caption relative">
               <h1>
@@ -51,7 +52,6 @@
                 Herramientas de calidad<br />
                 todo los productos al alcance del consumidor
               </p>
-              <a href="#">Ver más Productos</a>
             </div>
           </div>
         </div>
