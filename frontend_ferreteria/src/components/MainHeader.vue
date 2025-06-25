@@ -81,6 +81,9 @@ const authStore = useAuthStore()
                         <RouterLink to="/ventas">Ventas</RouterLink>
                       </li>
                       <li>
+                        <RouterLink to="/venta-detalle">Venta Detalle</RouterLink>
+                      </li>
+                      <li>
                         <a @click.prevent="authStore.logout()" class="text-danger" href="#"
                           >Salir</a
                         >

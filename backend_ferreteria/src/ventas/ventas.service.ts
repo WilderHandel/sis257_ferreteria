@@ -8,31 +8,34 @@ import { UpdateVentaDto } from './dto/update-venta.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Venta } from './entities/venta.entity';
 import { Repository } from 'typeorm';
+import { VentasDetallesService } from '../ventas_detalles/ventas_detalles.service';
 
 @Injectable()
 export class VentasService {
   constructor(
     @InjectRepository(Venta)
     private ventasRepository: Repository<Venta>,
+    private readonly ventasDetallesService: VentasDetallesService, // Inyectar el servicio aquí
   ) {}
 
-  async create(CreateVentaDto: CreateVentaDto): Promise<Venta> {
-    const existe = await this.ventasRepository.findOneBy({
-      idCliente: CreateVentaDto.idCliente,
-      idUsuario: CreateVentaDto.idUsuario,
-      fecha: CreateVentaDto.fecha,
-      transaccion: CreateVentaDto.transaccion,
-    });
-
-    if (existe) throw new ConflictException('La venta ya existe');
-
+  async create(createVentaDto: CreateVentaDto): Promise<Venta> {
     const venta = new Venta();
-    venta.idCliente = CreateVentaDto.idCliente;
-    venta.idUsuario = CreateVentaDto.idUsuario;
-    venta.fecha = CreateVentaDto.fecha;
-    venta.transaccion = CreateVentaDto.transaccion;
-    venta.cantidad = CreateVentaDto.cantidad;
-    return this.ventasRepository.save(venta);
+    venta.idCliente = createVentaDto.idCliente;
+    venta.idUsuario = createVentaDto.idUsuario;
+    venta.fecha = createVentaDto.fecha;
+    venta.transaccion = createVentaDto.transaccion;
+    venta.cantidad = createVentaDto.cantidad;
+    const ventaGuardada = await this.ventasRepository.save(venta);
+
+    // Guardar cada detalle
+    for (const detalle of createVentaDto.detalles) {
+      await this.ventasDetallesService.create({
+        ...detalle,
+        idVenta: ventaGuardada.id, // Asigna el id de la venta recién creada
+      });
+    }
+
+    return ventaGuardada;
   }
 
   async findAll(): Promise<Venta[]> {

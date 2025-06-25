@@ -28,6 +28,9 @@ export class VentaDetalle {
   @Column('decimal')
   total: number;
 
+  @Column('integer')
+  cantidad: number;
+
   @CreateDateColumn({ name: 'fecha_creacion' })
   fechaCreacion: Date;
 

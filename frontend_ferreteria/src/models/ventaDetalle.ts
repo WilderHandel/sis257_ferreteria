@@ -7,6 +7,7 @@ export interface VentaDetalle {
   idProducto: number
   precioUnitario: number
   total: number
+  cantidad: number;
   venta: Venta;
   producto: Producto
 }

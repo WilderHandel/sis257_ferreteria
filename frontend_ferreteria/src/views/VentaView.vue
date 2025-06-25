@@ -141,26 +141,26 @@ async function guardarVenta() {
   const idUsuario = 3 // <-- Ajusta esto según tu sistema de usuarios
   const transaccion = Date.now()
 
+  const detalles = detalleVenta.value.map(item => ({
+    idProducto: item.producto.id,
+    precioUnitario: Number(item.producto.precioVenta),
+    total: Number(item.producto.precioVenta) * item.cantidad,
+    cantidad: item.cantidad
+  }));
+
+  const ventaPayload = {
+    idCliente: cliente.id,
+    idUsuario: idUsuario,
+    fecha: new Date().toISOString().substring(0, 10),
+    transaccion: transaccion,
+    cantidad: detalleVenta.value.reduce((sum, item) => sum + item.cantidad, 0),
+    detalles // <-- aquí va el array de detalles
+  };
+
   try {
-    await axios.post(
-      'http://localhost:3000/api/v1/ventas',
-      {
-        idCliente: cliente.id,
-        idUsuario: idUsuario,
-        fecha: new Date().toISOString().substring(0, 10),
-        transaccion: transaccion,
-        cantidad: detalleVenta.value.reduce((sum, item) => sum + item.cantidad, 0), // suma total
-        detalle: detalleVenta.value.map(item => ({
-          idProducto: item.producto.id,
-          cantidad: item.cantidad
-        }))
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    )
+    await axios.post('http://localhost:3000/api/v1/ventas', ventaPayload, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
 
     alert('Venta guardada con éxito')
     ci.value = ''

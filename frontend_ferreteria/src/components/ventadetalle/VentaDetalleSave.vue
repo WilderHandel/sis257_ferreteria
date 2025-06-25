@@ -49,6 +49,7 @@ async function handleSave() {
       idProducto: ventaDetalle.value.producto?.id ?? 0,
       precioUnitario: ventaDetalle.value.precioUnitario,
       total: Number(ventaDetalle.value.total),
+      cantidad: Number(ventaDetalle.value.cantidad), // <-- AGREGA ESTO
     }
 
     if (props.modoEdicion) {
@@ -79,6 +80,7 @@ watch(
           producto: { id: 0 },
           precioUnitario: 0,
           total: 0,
+          cantidad: 1, // <-- AGREGA ESTO
         } as VentaDetalle
       }
     }
@@ -122,6 +124,11 @@ watch(
       <div class="flex items-center gap-4 mb-4">
         <label for="total" class="font-semibold">Total</label>
         <InputText id="total" v-model="ventaDetalle.total" class="flex-auto" />
+      </div>
+
+      <div class="flex items-center gap-4 mb-4">
+        <label for="cantidad" class="font-semibold">Cantidad</label>
+        <InputNumber id="cantidad" v-model="ventaDetalle.cantidad" class="flex-auto" :min="1" />
       </div>
     </Dialog>
   </div>

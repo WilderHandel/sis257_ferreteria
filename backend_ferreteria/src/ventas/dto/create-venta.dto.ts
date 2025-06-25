@@ -1,7 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsDateString, IsDefined, IsInt, IsNumber } from 'class-validator';
+import { IsArray, IsDateString, IsDefined, IsInt, IsNumber, ValidateNested } from 'class-validator';
+import { Type } from 'class-transformer';
 import { Cliente } from 'src/clientes/entities/cliente.entity';
 import { Usuario } from 'src/usuarios/entities/usuario.entity';
+import { CreateVentaDetalleDto } from 'src/ventas_detalles/dto/create-venta_detalle.dto';
 
 export class CreateVentaDto {
   @ApiProperty()
@@ -26,6 +28,12 @@ export class CreateVentaDto {
 
   @ApiProperty()
   @IsDefined({ message: 'El campo cantidad debe estar definido' })
-  @IsNumber({}, { message: 'El campo transaccion debe ser de tipo numérico' })
+  @IsNumber({}, { message: 'El campo cantidad debe ser de tipo numérico' })
   readonly cantidad: number;
+
+  @ApiProperty({ type: [CreateVentaDetalleDto] })
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => CreateVentaDetalleDto)
+  detalles: Omit<CreateVentaDetalleDto, 'idVenta'>[];
 }

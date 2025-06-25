@@ -13,10 +13,9 @@ const ventaDetalleDelete = ref<VentaDetalle | null>(null)
 const mostrarConfirmDialog = ref<boolean>(false)
 const busqueda = ref<string>('')
 
-async function obtenerLista(ventaId: number) {
+async function obtenerLista() {
   try {
-    const response = await http.get(`ventas/${ventaId}/detalles`)
-    console.log('Ventas Detalles obtenidos:', response.data)
+    const response = await http.get(ENDPOINT)
     ventasDetalles.value = response.data
   } catch (error) {
     console.error('Error al obtener Ventas Detalles:', error)
@@ -31,9 +30,7 @@ const ventasDetallesFiltrados = computed(() => {
 })
 
 onMounted(() => {
-  const ventaId = 1
-  console.log('Componente VentaDetalleList montado')
-  obtenerLista(ventaId)
+  obtenerLista()
 })
 defineExpose({ obtenerLista })
 </script>
@@ -55,6 +52,7 @@ defineExpose({ obtenerLista })
       <Column field="venta.fecha" header="Fecha de Venta" sortable />
       <Column field="precioUnitario" header="Precio Unitario" />
       <Column field="total" header="Total" />
+      <Column field="cantidad" header="Cantidad" />
     </DataTable>
   </div>
 </template>

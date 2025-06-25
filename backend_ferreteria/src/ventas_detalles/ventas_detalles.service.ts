@@ -8,12 +8,15 @@ import { UpdateVentaDetalleDto } from './dto/update-venta_detalle.dto';
 import { VentaDetalle } from './entities/venta_detalle.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { Producto } from 'src/productos/entities/producto.entity';
 
 @Injectable()
 export class VentasDetallesService {
   constructor(
     @InjectRepository(VentaDetalle)
-    private ventasRepository: Repository<VentaDetalle>,
+  private ventasRepository: Repository<VentaDetalle>,
+  @InjectRepository(Producto)
+  private productosRepository: Repository<Producto>,
   ) {}
 
   async create(
@@ -22,17 +25,24 @@ export class VentasDetallesService {
     const existe = await this.ventasRepository.findOneBy({
       idVenta: createVentaDetalleDto.idVenta,
       idProducto: createVentaDetalleDto.idProducto,
-      //precioUnitario: createVentaDetalleDto.precioUnitario,
-      //total: createVentaDetalleDto.total,
     });
 
     if (existe) throw new ConflictException('El detalle de la venta ya existe');
 
+    // Descontar saldo del producto
+    const producto = await this.productosRepository.findOneBy({ id: createVentaDetalleDto.idProducto });
+    if (!producto) throw new NotFoundException('Producto no encontrado');
+    if (producto.saldo < createVentaDetalleDto.cantidad) throw new ConflictException('Stock insuficiente');
+    producto.saldo -= createVentaDetalleDto.cantidad;
+    await this.productosRepository.save(producto);
+
     const ventaDetalle = new VentaDetalle();
-    ventaDetalle.idVenta = createVentaDetalleDto.idVenta;
+    ventaDetalle.idVenta = createVentaDetalleDto.idVenta!; // <-- aquí va el signo !
     ventaDetalle.idProducto = createVentaDetalleDto.idProducto;
     ventaDetalle.precioUnitario = createVentaDetalleDto.precioUnitario;
     ventaDetalle.total = createVentaDetalleDto.total;
+    ventaDetalle.cantidad = createVentaDetalleDto.cantidad;
+
     return this.ventasRepository.save(ventaDetalle);
   }
 

@@ -9,5 +9,6 @@ export interface Venta{
     transaccion: number;
     cantidad: number;
     cliente: Cliente;
+    detalles: any[]; // Array of VentaDetalle
     //usuario: Usuario;
 }
