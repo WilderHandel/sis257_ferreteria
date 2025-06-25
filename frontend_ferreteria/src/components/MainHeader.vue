@@ -70,7 +70,14 @@ const authStore = useAuthStore()
                       </div>
                     </div>
                     <RouterLink to="/about">Acerca de</RouterLink>
-                    <RouterLink to="/ventas">Ventas</RouterLink>
+                    <!-- Nueva dropdown para ventas -->
+                    <div class="dropdown">
+                      <span class="dropdown-toggle">Ventas</span>
+                      <div class="dropdown-menu">
+                        <RouterLink to="/ventas">Nueva Venta Venta</RouterLink>
+                        <RouterLink to="/venta-detalle">Detalle de Venta</RouterLink>
+                      </div>
+                    </div>
                     <span class="bienvenido">Bienvenido {{ authStore.user }}</span>
                     <a @click="authStore.logout()" href="#">Cerrar Sesión</a>
                   </template>
