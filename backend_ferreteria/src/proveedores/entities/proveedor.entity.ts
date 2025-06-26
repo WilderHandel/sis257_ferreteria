@@ -20,7 +20,7 @@ export class Proveedor {
   @Column('varchar', { length: 12, name: 'ci_nit' })
   ciNit: string;
 
-  @Column('varchar')
+  @Column('varchar',{ nullable: true })
   telefono: string;
 
   @Column('varchar')

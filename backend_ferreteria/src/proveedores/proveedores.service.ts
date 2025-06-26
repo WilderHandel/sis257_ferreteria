@@ -20,7 +20,7 @@ export class ProveedoresService {
     const existe = await this.proveedoresRepository.findOneBy({
       ciNit: createProveedorDto.ciNit,
       razonSocial: createProveedorDto.razonSocial.trim(),
-      telefono: createProveedorDto.telefono,
+      telefono: createProveedorDto.telefono.toString(),
       direccion: createProveedorDto.direccion.trim(),
       representante: createProveedorDto.representante.trim(),
     });
@@ -29,7 +29,7 @@ export class ProveedoresService {
     const proveedor = new Proveedor();
     proveedor.ciNit = createProveedorDto.ciNit;
     proveedor.razonSocial = createProveedorDto.razonSocial.trim();
-    proveedor.telefono = createProveedorDto.telefono;
+    proveedor.telefono = createProveedorDto.telefono.toString();
     proveedor.representante = createProveedorDto.representante;
     proveedor.direccion = createProveedorDto.direccion;
 
