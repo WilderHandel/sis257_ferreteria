@@ -2,7 +2,7 @@ export interface Proveedor {
   id: number
   razonSocial: string
   ciNit: string
-  telefono: number
+  telefono: string
   direccion: string
   representante: string
 }

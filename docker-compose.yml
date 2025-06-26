@@ -1,0 +1,56 @@
+networks:
+  net-sis257_ferreteria:
+    name: net-sis257_ferreteria
+    driver: bridge
+
+services:
+  db-sis257_ferreteria:
+    image: postgres
+    container_name: db-sis257_ferreteria
+    restart: always
+    ports:
+      - "5434:5432"
+    networks:
+      - net-sis257_ferreteria
+    environment:
+      POSTGRES_DB: sis257_ferreteria
+      POSTGRES_USER: usr_ferreteria
+      POSTGRES_PASSWORD: 123456
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
+
+  backend-sis257_ferreteria:
+    depends_on:
+      - db-sis257_ferreteria
+    image: be-sis257_ferreteria
+    container_name: api-sis257_ferreteria
+    restart: unless-stopped
+    build:
+      context: ./backend_ferreteria
+    ports:
+      - 3000:3000
+    networks:
+      - net-sis257_ferreteria
+    environment:
+      DB_HOST: db-sis257_ferreteria
+    volumes:
+      - ./backend_ferreteria:/usr/src/app
+      - /usr/src/app/node_modules/
+
+  frontend-sis257_ferreteria:
+    depends_on:
+        - backend-sis257_ferreteria
+    image: fe-sis257_ferreteria
+    container_name: app-sis257_ferreteria
+    restart: unless-stopped
+    build:
+      context: ./frontend_ferreteria
+      dockerfile: Dockerfile
+    ports:
+      - 85:85
+    networks:
+      - net-sis257_ferreteria
+    environment:
+      VITE_BASE_URL_ENDPOINT: backend-sis257_ferreteria
+    volumes:
+      - /usr/src/app/node_modules/

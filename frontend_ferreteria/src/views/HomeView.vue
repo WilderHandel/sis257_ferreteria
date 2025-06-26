@@ -3,7 +3,8 @@ import { ref, onMounted } from 'vue'
 import axios from 'axios'
 const token = localStorage.getItem('token')
 
-const productos = ref([])
+import type { Producto } from '@/models/producto'
+const productos = ref<Producto[]>([])
 
 onMounted(async () => {
   try {

@@ -20,8 +20,8 @@ export class Proveedor {
   @Column('varchar', { length: 12, name: 'ci_nit' })
   ciNit: string;
 
-  @Column('integer')
-  telefono: number;
+  @Column('varchar')
+  telefono: string;
 
   @Column('varchar')
   direccion: string;

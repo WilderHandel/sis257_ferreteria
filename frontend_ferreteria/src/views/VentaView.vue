@@ -222,9 +222,7 @@ const idUsuario = getIdUsuarioFromToken()
 
 function cancelarVenta() {
   detalleVenta.value = []
-  total.value = 0
   dineroRecibido.value = 0
-  cambio.value = 0
   productoSeleccionado.value = null
   cantidad.value = 1
 

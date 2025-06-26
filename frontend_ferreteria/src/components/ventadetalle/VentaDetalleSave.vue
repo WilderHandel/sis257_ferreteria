@@ -95,7 +95,7 @@ watch(
         <label for="categoria" class="font-semibold w-3">Categoría</label>
         <Select
           id="venta"
-          v-model="ventaDetalle.venta.id"
+          v-model="ventaDetalle.idVenta"
           :options="ventas"
           optionLabel="fecha"
           optionValue="id"
@@ -108,7 +108,7 @@ watch(
         <label for="producto" class="font-semibold w-3">Producto</label>
         <Select
           id="producto"
-          v-model="ventaDetalle.producto.id"
+          v-model="ventaDetalle.idProducto"
           :options="productos"
           optionLabel="descripcion"
           optionValue="id"
@@ -118,12 +118,12 @@ watch(
 
       <div class="flex items-center gap-4 mb-4">
         <label for="precioUnitario" class="font-semibold w-3">Precio Unitario</label>
-        <InputText id="precioUnitario" v-model="ventaDetalle.precioUnitario" class="flex-auto" />
+        <InputNumber id="precioUnitario" v-model="ventaDetalle.precioUnitario" class="flex-auto" />
       </div>
 
       <div class="flex items-center gap-4 mb-4">
         <label for="total" class="font-semibold">Total</label>
-        <InputText id="total" v-model="ventaDetalle.total" class="flex-auto" />
+        <InputNumber id="total" v-model="ventaDetalle.total" class="flex-auto" />
       </div>
 
       <div class="flex items-center gap-4 mb-4">
