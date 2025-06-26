@@ -2605,3 +2605,18 @@ ul.lik li a:hover {
   width: auto !important;
   table-layout: auto !important;
 }
+
+.tarjeta {
+  background-color: #ffffff;
+  border-radius: 1rem;
+  padding: 2rem;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e5e7eb;
+  transition: box-shadow 0.3s ease-in-out;
+  overflow: hidden;
+}
+
+.tarjeta:hover {
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
