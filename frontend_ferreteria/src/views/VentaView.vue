@@ -79,6 +79,7 @@ function agregarProducto() {
         cantidad: cantidad.value,
       })
     }
+    productoSeleccionado.value.saldo -= cantidad.value
     productoSeleccionado.value = null
     cantidad.value = 1
   }
