@@ -233,7 +233,7 @@ function cancelarVenta() {
 </script>
 
 <template>
-  <div class="container">
+  <div class="container fondo-formulario-venta">
     <div class="tarjeta">
       <div>
         <h2 class="text-xl font-bold mb-4">Registrar Venta</h2>
@@ -380,56 +380,7 @@ function cancelarVenta() {
 
       </div>
     </div>
-    <h3>Detalle de Venta</h3>
-    <table class="p-datatable-table">
-      <thead>
-        <tr>
-          <th>Código de Producto</th>
-          <th>Descripción</th>
-          <th>Unidad</th>
-          <th>Cantidad</th>
-          <th>Precio Unitario</th>
-          <th>Subtotal</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(item, idx) in detalleVenta" :key="item.producto.codigo">
-          <td>{{ item.producto.codigo }}</td>
-          <td>{{ item.producto.descripcion }}</td>
-          <td>{{ item.producto.unidadMedida }}</td>
-          <td>{{ item.cantidad }}</td>
-          <td>{{ item.producto.precioVenta }}</td>
-          <td>{{ item.producto.precioVenta * item.cantidad }}</td>
-          <td>
-            <Button
-              icon="pi pi-trash"
-              severity="danger"
-              @click="quitarProducto(idx)"
-              rounded
-              text
-            />
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <div class="mt-2">
-      <strong
-        >Total de productos vendidos:
-        {{ detalleVenta.reduce((sum, item) => sum + item.cantidad, 0) }}</strong
-      >
-    </div>
-    <div class="mt-3">
-      <strong>Total: {{ total }}</strong>
-    </div>
-    <div class="mb-3 mt-3">
-      <label>Dinero recibido:</label>
-      <InputNumber v-model="dineroRecibido" :min="0" class="ml-2" />
-    </div>
-    <div>
-      <strong>Cambio: {{ cambio }}</strong>
-    </div>
-    <Button label="Finalizar Venta" class="bg-yellow-400 hover:bg-yellow-500 text-black border-none" @click="guardarVenta" />
+    <h3></h3>
   </div>
 
 
@@ -468,7 +419,22 @@ function cancelarVenta() {
 
 .p-datatable-table th,
 .p-datatable-table td {
-  border: 1px solid #ccc;
+  border: 1px solid #000000;
   padding: 0.5rem;
+}
+
+.fondo-formulario-venta {
+  background: #fdd143;
+  border-radius: 1rem;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+  padding: 2rem 2.5rem;
+  max-width: 900px;
+  margin: 2rem auto;
+}
+
+.tabla-productos {
+  background: #fefefe;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 8px rgba(0,0,0,0.04);
 }
 </style>

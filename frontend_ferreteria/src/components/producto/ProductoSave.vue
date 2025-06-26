@@ -8,7 +8,7 @@ import Button from 'primevue/button'
 import Dialog from 'primevue/dialog'
 import InputText from 'primevue/inputtext'
 import InputNumber from 'primevue/inputnumber'
-import { Select } from 'primevue'
+import Select from 'primevue/select'
 
 const ENDPOINT = 'productos'
 
@@ -34,6 +34,14 @@ const dialogVisible = computed({
 
 const producto = ref<Producto>({ ...props.producto })
 
+const unidadesMedida = [
+  { label: 'Caja', value: 'caja' },
+  { label: 'Docena', value: 'docena' },
+  { label: 'Bolsa', value: 'bolsa' },
+  { label: 'Unidad', value: 'unidad' },
+  { label: 'Paquete', value: 'Paquete' },
+]
+
 async function obtenerCategorias() {
   categorias.value = await http.get('categorias').then(res => res.data)
 }
@@ -48,7 +56,7 @@ async function handleSave() {
       idCategoria: producto.value.categoria?.id ?? 0,
       idProveedor: producto.value.proveedor?.id ?? 0,
       codigo: producto.value.codigo,
-      descripcion: producto.value.descripcion,
+      nombre: producto.value.nombre,
       precioVenta: Number(producto.value.precioVenta),
       saldo: producto.value.saldo,
       unidadMedida: producto.value.unidadMedida,
@@ -107,7 +115,7 @@ watch(
           id="categoria"
           v-model="producto.categoria.id"
           :options="categorias"
-          optionLabel="descripcion"
+          optionLabel="nombre"
           optionValue="id"
           class="flex-auto"
           autofocus
@@ -133,7 +141,7 @@ watch(
 
       <div class="flex items-center gap-4 mb-4">
         <label for="descripcion" class="font-semibold">Descripción</label>
-        <InputText id="descripcion" v-model="producto.descripcion" class="flex-auto" />
+        <InputText id="nombre" v-model="producto.nombre" class="flex-auto" />
       </div>
 
       <div class="flex items-center gap-4 mb-4">
@@ -162,7 +170,14 @@ watch(
 
       <div class="flex items-center gap-4 mb-4">
         <label for="unidadMedida" class="font-semibold">Unidad de Medida</label>
-        <InputText id="unidadMedida" v-model="producto.unidadMedida" class="flex-auto" />
+        <Select
+          id="unidadMedida"
+          v-model="producto.unidadMedida"
+          :options="unidadesMedida"
+          optionLabel="label"
+          optionValue="value"
+          class="flex-auto"
+        />
       </div>
 
       <div class="flex items-center gap-4 mb-4">
