@@ -68,7 +68,9 @@ function agregarProducto() {
       (d) => d.producto.id === productoSeleccionado.value.id,
     )
     if (existente) {
-      if (existente.cantidad + cantidad.value > productoSeleccionado.value.saldo) {
+      const cantidadTotal = existente.cantidad + cantidad.value
+
+      if (cantidadTotal > productoSeleccionado.value.saldo + existente.cantidad) {
         alert('La cantidad total en el detalle excede la cantidad disponible.')
         return
       }
@@ -87,6 +89,8 @@ function agregarProducto() {
 
 // Quitar producto del detalle de venta
 function quitarProducto(index: number) {
+  const detalle = detalleVenta.value[index]
+  detalle.producto.saldo += detalle.cantidad
   detalleVenta.value.splice(index, 1)
 }
 
@@ -142,12 +146,12 @@ async function guardarVenta() {
 
   const transaccion = Date.now()
 
-  const detalles = detalleVenta.value.map(item => ({
+  const detalles = detalleVenta.value.map((item) => ({
     idProducto: item.producto.id,
     precioUnitario: Number(item.producto.precioVenta),
     total: Number(item.producto.precioVenta) * item.cantidad,
-    cantidad: item.cantidad
-  }));
+    cantidad: item.cantidad,
+  }))
 
   const ventaPayload = {
     idCliente: cliente.id,
@@ -155,13 +159,13 @@ async function guardarVenta() {
     fecha: new Date().toISOString().substring(0, 10),
     transaccion: transaccion,
     cantidad: detalleVenta.value.reduce((sum, item) => sum + item.cantidad, 0),
-    detalles // <-- aquí va el array de detalles
-  };
+    detalles, // <-- aquí va el array de detalles
+  }
 
   try {
     await axios.post('http://localhost:3000/api/v1/ventas', ventaPayload, {
-      headers: { Authorization: `Bearer ${token}` }
-    });
+      headers: { Authorization: `Bearer ${token}` },
+    })
 
     alert('Venta guardada con éxito')
     ci.value = ''
@@ -193,7 +197,7 @@ async function crearClienteAutomatico() {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     )
     // Recarga la lista de clientes y retorna el nuevo cliente
     await clienteListRef.value?.obtenerLista()
@@ -302,7 +306,10 @@ const idUsuario = getIdUsuarioFromToken()
       </tbody>
     </table>
     <div class="mt-2">
-      <strong>Total de productos vendidos: {{ detalleVenta.reduce((sum, item) => sum + item.cantidad, 0) }}</strong>
+      <strong
+        >Total de productos vendidos:
+        {{ detalleVenta.reduce((sum, item) => sum + item.cantidad, 0) }}</strong
+      >
     </div>
     <div class="mt-3">
       <strong>Total: {{ total }}</strong>
