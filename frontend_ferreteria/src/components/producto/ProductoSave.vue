@@ -56,7 +56,7 @@ async function handleSave() {
       idCategoria: producto.value.categoria?.id ?? 0,
       idProveedor: producto.value.proveedor?.id ?? 0,
       codigo: producto.value.codigo,
-      nombre: producto.value.nombre,
+      nombre: producto.value.descripcion,
       precioVenta: Number(producto.value.precioVenta),
       saldo: producto.value.saldo,
       unidadMedida: producto.value.unidadMedida,
@@ -141,7 +141,7 @@ watch(
 
       <div class="flex items-center gap-4 mb-4">
         <label for="descripcion" class="font-semibold">Descripción</label>
-        <InputText id="nombre" v-model="producto.nombre" class="flex-auto" />
+        <InputText id="nombre" v-model="producto.descripcion" class="flex-auto" />
       </div>
 
       <div class="flex items-center gap-4 mb-4">
