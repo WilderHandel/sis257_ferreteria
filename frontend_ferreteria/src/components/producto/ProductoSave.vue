@@ -1,4 +1,4 @@
-<script setup lang="ts"> 
+<script setup lang="ts">
 import type { Producto } from '@/models/producto'
 import type { Categoria } from '@/models/categoria'
 import type { Proveedor } from '@/models/proveedor'
@@ -102,7 +102,7 @@ watch(
       style="width: 25rem"
     >
       <div class="flex items-center gap-4 mb-4">
-        <label for="categoria" class="font-semibold w-3">Categoría</label>
+        <label for="categoria" class="fon-semibold w-3">Categoría</label>
         <Select
           id="categoria"
           v-model="producto.categoria.id"
@@ -178,7 +178,7 @@ watch(
           severity="secondary"
           @click="dialogVisible = false"
         ></Button>
-        <Button type="button" label="Guardar" icon="pi pi-save" @click="handleSave"></Button>
+        <Button type="button" label="Guardar" icon="pi pi-save" class="bg-yellow-400 hover:bg-yellow-500 text-black border-none" @click="handleSave"></Button>
       </div>
     </Dialog>
   </div>

@@ -30,8 +30,8 @@ const productosFiltrados = computed(() => {
       producto.codigo.toLowerCase().includes(busqueda.value.toLowerCase()) ||
       producto.descripcion.toLowerCase().includes(busqueda.value.toLowerCase()) ||
       producto.unidadMedida.toLowerCase().includes(busqueda.value.toLowerCase()),
-      //producto.categoria.nombre.toLowerCase().includes(busqueda.value.toLowerCase()) ||
-      //producto.proveedor.razonSocial.toLowerCase().includes(busqueda.value.toLowerCase())
+    //producto.categoria.nombre.toLowerCase().includes(busqueda.value.toLowerCase()) ||
+    //producto.proveedor.razonSocial.toLowerCase().includes(busqueda.value.toLowerCase())
   )
 })
 
@@ -69,38 +69,95 @@ defineExpose({ productos, obtenerLista })
         />
       </InputGroup>
     </div>
-    <DataTable :value="productosFiltrados" paginator scrollable scrollHeight="flex" :rows="5" :rowsPerPageOptions="[5, 10, 20]" tableStyle="min-width: 50rem">
-      <Column field="categoria.nombre" header="Categoría" sortable />
-      <Column header="Fotografia" sortable>
+    <DataTable
+      :value="productosFiltrados"
+      paginator
+      scrollable
+      scrollHeight="flex"
+      :rows="5"
+      :rowsPerPageOptions="[5, 10, 20]"
+      tableStyle="min-width: 50rem"
+      showGridlines
+    >
+      <Column
+        field="categoria.nombre"
+        header="Categoría"
+        sortable
+        :headerStyle="{ backgroundColor: '#1b1b1b', color: 'white' }"
+      />
+      <Column
+        header="Fotografia"
+        sortable
+        :headerStyle="{ backgroundColor: '#1b1b1b', color: 'white' }"
+      >
         <template #body="{ data }">
           <img
-        v-if="data.fotografia"
-        :src="data.fotografia"
-        alt="Foto"
-        style="width: 50px; height: 50px; object-fit: cover; border-radius: 4px"
+            v-if="data.fotografia"
+            :src="data.fotografia"
+            alt="Foto"
+            style="width: 50px; height: 50px; object-fit: cover; border-radius: 4px"
+          />
+          <span v-else>No imagen</span>
+        </template>
+      </Column>
+      <Column
+        field="codigo"
+        header="Código"
+        sortable
+        :headerStyle="{ backgroundColor: '#1b1b1b', color: 'white' }"
       />
-      <span v-else>No imagen</span>
-    </template>
-  </Column>
-  <Column field="codigo" header="Código" sortable />
-  <Column field="descripcion" header="Descripción" sortable />
-  <Column field="precioVenta" header="Precio de Venta" />
-  <Column field="saldo" header="Saldo" />
-  <Column field="unidadMedida" header="Unidad de Medida" />
-  <Column field="proveedor.razonSocial" header="Proveedor" />
-  <Column header="Acciones" frozen alignFrozen="right" style="min-width: 120px">
-    <template #body="{ data }">
-      <Button icon="pi pi-pencil" aria-label="Editar" text @click="emitirEdicion(data)" />
-      <Button
-        icon="pi pi-trash"
-        aria-label="Eliminar"
-        severity="danger"
-        text
-        @click="mostrarEliminarConfirm(data)"
+      <Column
+        field="descripcion"
+        header="Descripción"
+        sortable
+        :headerStyle="{ backgroundColor: '#1b1b1b', color: 'white' }"
       />
-    </template>
-  </Column>
-</DataTable>
+      <Column
+        field="precioVenta"
+        header="Precio de Venta"
+        :headerStyle="{ backgroundColor: '#1b1b1b', color: 'white' }"
+      />
+      <Column
+        field="saldo"
+        header="Saldo"
+        :headerStyle="{ backgroundColor: '#1b1b1b', color: 'white' }"
+      />
+      <Column
+        field="unidadMedida"
+        header="Unidad de Medida"
+        :headerStyle="{ backgroundColor: '#1b1b1b', color: 'white' }"
+      />
+      <Column
+        field="proveedor.razonSocial"
+        header="Proveedor"
+        :headerStyle="{ backgroundColor: '#1b1b1b', color: 'white' }"
+      />
+      <Column
+        header="Acciones"
+        frozen
+        alignFrozen="right"
+        style="min-width: 120px"
+        :headerStyle="{ backgroundColor: '#1b1b1b', color: 'white' }"
+      >
+        <template #body="{ data }">
+          <Button
+            icon="pi pi-pencil"
+            aria-label="Editar"
+            class="boton-amarillo"
+            text
+            @click="emitirEdicion(data)"
+          />
+
+          <Button
+            icon="pi pi-trash"
+            aria-label="Eliminar"
+            text
+            class="boton-rojo"
+            @click="mostrarEliminarConfirm(data)"
+          />
+        </template>
+      </Column>
+    </DataTable>
 
     <Dialog
       v-model:visible="mostrarConfirmDialog"
@@ -115,7 +172,7 @@ defineExpose({ productos, obtenerLista })
           severity="secondary"
           @click="mostrarConfirmDialog = false"
         />
-        <Button type="button" label="Eliminar" @click="eliminar" />
+        <Button type="button" severity="danger" label="Eliminar" @click="eliminar" />
       </div>
     </Dialog>
   </div>

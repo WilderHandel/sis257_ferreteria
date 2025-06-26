@@ -14,7 +14,7 @@ export class CreateClienteDto {
   @IsNotEmpty({ message: 'El campo Ci/Nit no debe ser vacío' })
   @IsString({ message: 'El campo Ci/Nit debe ser de tipo cadena' })
   @MaxLength(12, {
-    message: 'El campo Descripcion no debe ser mayor a 12 caracteres',
+    message: 'El campo Ci/Nit no debe ser mayor a 12 caracteres',
   })
   readonly ciNit: string;
 }

@@ -2579,3 +2579,29 @@ ul.lik li a:hover {
 .dropdown:hover .dropdown-menu {
   display: flex;
 }
+.boton-amarillo {
+  color: #facc15 !important;
+  border: 1px solid #facc15 !important;
+  border-radius: 4px;
+  background-color: transparent !important;
+}
+
+.boton-amarillo:hover {
+  background-color: #fef08a !important;
+  color: #ca8a04 !important;
+}
+.boton-rojo {
+  color: #dc2626 !important;
+  border: 1px solid #dc2626 !important;
+  border-radius: 4px;
+  background-color: transparent !important;
+}
+
+.boton-rojo:hover {
+  background-color: #fecaca !important;
+  color: #b91c1c !important;
+}
+.p-datatable-table {
+  width: auto !important;
+  table-layout: auto !important;
+}

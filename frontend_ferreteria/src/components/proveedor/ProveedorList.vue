@@ -15,7 +15,7 @@ const mostrarConfirmDialog = ref<boolean>(false)
 const busqueda = ref<string>('')
 
 async function obtenerLista() {
-   try {
+  try {
     const response = await http.get(ENDPOINT)
     console.log('Proveedores obtenidos:', response.data)
     proveedores.value = response.data
@@ -66,19 +66,57 @@ defineExpose({ obtenerLista })
         />
       </InputGroup>
     </div>
- <DataTable :value="proveedoresFiltrados" paginator scrollable scrollHeight="flex" :rows="5" :rowsPerPageOptions="[5, 10, 20]" tableStyle="min-width: 50rem">
-      <Column field="razonSocial" header="Razón Social" sortable />
-      <Column field="ciNit" header="CI/NIT" sortable />
-      <Column field="telefono" header="Teléfono" />
-      <Column field="direccion" header="Dirección" />
-      <Column field="representante" header="Representante" />
-      <Column header="Acciones" frozen alignFrozen="right" style="min-width: 120px">
+    <DataTable
+      :value="proveedoresFiltrados"
+      paginator
+      scrollable
+      scrollHeight="flex"
+      :rows="5"
+      :rowsPerPageOptions="[5, 10, 20]"
+      tableStyle="min-width: 50rem"
+      showGridlines
+    >
+      <Column
+        field="razonSocial"
+        header="Razón Social"
+        sortable
+        :headerStyle="{ backgroundColor: '#1b1b1b', color: 'white' }"
+      />
+      <Column
+        field="ciNit"
+        header="CI/NIT"
+        sortable
+        :headerStyle="{ backgroundColor: '#1b1b1b', color: 'white' }"
+      />
+      <Column
+        field="telefono"
+        header="Teléfono"
+        :headerStyle="{ backgroundColor: '#1b1b1b', color: 'white' }"
+      />
+      <Column
+        field="direccion"
+        header="Dirección"
+        :headerStyle="{ backgroundColor: '#1b1b1b', color: 'white' }"
+      />
+      <Column
+        field="representante"
+        header="Representante"
+        :headerStyle="{ backgroundColor: '#1b1b1b', color: 'white' }"
+      />
+      <Column
+        header="Acciones"
+        frozen
+        alignFrozen="right"
+        style="min-width: 120px"
+        :headerStyle="{ backgroundColor: '#1b1b1b', color: 'white' }"
+      >
         <template #body="{ data }">
-          <Button icon="pi pi-pencil" aria-label="Editar" text @click="emitirEdicion(data)" />
+          <Button icon="pi pi-pencil" aria-label="Editar" class="boton-amarillo" text @click="emitirEdicion(data)" />
           <Button
             icon="pi pi-trash"
             aria-label="Eliminar"
             severity="danger"
+            class="boton-rojo"
             text
             @click="mostrarEliminarConfirm(data)"
           />
@@ -99,7 +137,7 @@ defineExpose({ obtenerLista })
           severity="secondary"
           @click="mostrarConfirmDialog = false"
         />
-        <Button type="button" label="Eliminar" @click="eliminar" />
+        <Button type="button" label="Eliminar" severity="danger" @click="eliminar" />
       </div>
     </Dialog>
   </div>

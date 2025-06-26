@@ -30,7 +30,7 @@ function handleGuardar() {
 <template>
   <div class="m-7">
     <h2>Clientes</h2>
-    <Button label="Crear Nuevo" icon="pi pi-plus" @click="handleCreate" />
+    <Button label="Crear Nuevo" icon="pi pi-plus" class="bg-yellow-400 hover:bg-yellow-500 text-black border-none" @click="handleCreate" />
     <ClienteList ref="clienteListRef" @edit="handleEdit" />
     <ClienteSave
       :mostrar="mostrarDialog"

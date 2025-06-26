@@ -91,7 +91,7 @@ async function handleSave() {
           severity="secondary"
           @click="dialogVisible = false"
         ></Button>
-        <Button type="button" label="Guardar" icon="pi pi-save" @click="handleSave"></Button>
+        <Button type="button" label="Guardar" icon="pi pi-save" class="bg-yellow-400 hover:bg-yellow-500 text-black border-none" @click="handleSave"></Button>
       </div>
     </Dialog>
   </div>
