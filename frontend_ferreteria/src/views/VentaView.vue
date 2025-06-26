@@ -431,7 +431,7 @@ function cancelarVenta() {
     <div>
       <strong>Cambio: {{ cambio }}</strong>
     </div>
-    <Button label="Finalizar Venta" class="mt-3" @click="guardarVenta" />
+    <Button label="Finalizar Venta" class="bg-yellow-400 hover:bg-yellow-500 text-black border-none" @click="guardarVenta" />
   </div>
 
 
