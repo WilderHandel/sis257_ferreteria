@@ -53,18 +53,27 @@ defineExpose({ obtenerLista })
         />
       </InputGroup>
     </div>
- <DataTable :value="ventasDetallesFiltrados" paginator scrollable scrollHeight="flex" :rows="5" :rowsPerPageOptions="[5, 10, 20]" tableStyle="min-width: 50rem">
+    <DataTable :value="ventasDetallesFiltrados" paginator scrollable scrollHeight="flex" :rows="5" :rowsPerPageOptions="[5, 10, 20]" tableStyle="min-width: 50rem">
       <Column field="producto.codigo" header="Código de Producto" sortable />
       <Column header="Fecha de Venta" sortable>
         <template #body="slotProps">
           {{ formatFecha(slotProps.data.venta.fecha) }}
         </template>
       </Column>
-      <Column field="venta.cliente.nombre" header="Cliente" sortable />
-      <Column field="venta.idUsuario.usuario" header="Vendedor" sortable />
+      <!-- Aquí van las columnas personalizadas -->
+      <Column header="Cliente">
+        <template #body="slotProps">
+          {{ slotProps.data.venta.cliente?.nombre || 'Sin cliente' }}
+        </template>
+      </Column>
+      <Column header="Vendedor">
+        <template #body="slotProps">
+          {{ slotProps.data.venta.usuario?.usuario || 'Sin usuario' }}
+        </template>
+      </Column>
       <Column field="precioUnitario" header="Precio Unitario" />
-      <Column field="total" header="Total" />
       <Column field="cantidad" header="Cantidad" />
+      <Column field="total" header="Total" />
     </DataTable>
   </div>
 </template>

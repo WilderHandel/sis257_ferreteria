@@ -42,13 +42,13 @@ export class Venta {
   @DeleteDateColumn({ name: 'fecha_eliminacion' })
   fechaEliminacion: Date;
 
-  @ManyToOne(() => Cliente, (cliente) => cliente.ventas)
-  @JoinColumn({ name: 'id_cliente', referencedColumnName: 'id' })
-  cliente: Cliente;
-
   @ManyToOne(() => Usuario, (usuario) => usuario.ventas)
   @JoinColumn({ name: 'id_usuario', referencedColumnName: 'id' })
   usuario: Usuario;
+
+  @ManyToOne(() => Cliente, (cliente) => cliente.ventas)
+  @JoinColumn({ name: 'id_cliente', referencedColumnName: 'id' })
+  cliente: Cliente;
 
   @OneToMany(() => VentaDetalle, (ventaDetalle) => ventaDetalle.venta)
   ventasDetalles: VentaDetalle[];

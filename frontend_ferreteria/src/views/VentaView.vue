@@ -133,12 +133,12 @@ async function guardarVenta() {
     if (!cliente) return
   }
 
-  // Aquí debes obtener el idUsuario autenticado
-  // Por ejemplo, usando Pinia:
-  // import { useAuthStore } from '@/stores/index'
-  // const authStore = useAuthStore()
-  // const idUsuario = authStore.user?.id
-  const idUsuario = 3 // <-- Ajusta esto según tu sistema de usuarios
+  const idUsuario = getIdUsuarioFromToken()
+  if (!idUsuario) {
+    alert('No se pudo obtener el ID de usuario.')
+    return
+  }
+
   const transaccion = Date.now()
 
   const detalles = detalleVenta.value.map(item => ({
@@ -202,6 +202,15 @@ async function crearClienteAutomatico() {
     throw error
   }
 }
+
+function getIdUsuarioFromToken() {
+  const token = localStorage.getItem('token')
+  if (!token) return null
+  const payload = JSON.parse(atob(token.split('.')[1]))
+  return payload.sub // o payload.id según cómo esté tu JWT
+}
+
+const idUsuario = getIdUsuarioFromToken()
 </script>
 
 <template>

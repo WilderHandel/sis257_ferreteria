@@ -48,7 +48,13 @@ export class VentasDetallesService {
 
   async findAll(): Promise<VentaDetalle[]> {
     return this.ventasRepository.find({
-      relations: { producto: true, venta: true },
+      relations: {
+        producto: true,
+        venta: {
+          cliente: true,
+          usuario: true,
+        },
+      },
       select: {
         id: true,
         idProducto: true, // necesario
@@ -66,10 +72,9 @@ export class VentasDetallesService {
         },
         venta: {
           id: true,
-          idCliente: true,
-          idUsuario: true,
           fecha: true,
-          transaccion: true,
+          cliente: { nombre: true },
+          usuario: { usuario: true }, // o nombre si tienes ese campo
         },
       },
     });
