@@ -10,11 +10,4 @@ export class CreateCategoriaDto {
   })
   readonly nombre: string;
 
-  @ApiProperty()
-  @IsNotEmpty({ message: 'El campo Descripción no debe ser vacío' })
-  @IsString({ message: 'El campo Descripción debe ser de tipo cadena' })
-  @MaxLength(100, {
-    message: 'El campo Descripcion no debe ser mayor a 100 caracteres',
-  })
-  readonly descripcion: string;
 }

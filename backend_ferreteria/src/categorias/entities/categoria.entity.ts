@@ -17,9 +17,6 @@ export class Categoria {
   @Column('varchar', { length: 50 })
   nombre: string;
 
-  @Column('varchar', { length: 100 })
-  descripcion: string;
-
   @CreateDateColumn({ name: 'fecha_creacion' })
   fechaCreacion: Date;
 

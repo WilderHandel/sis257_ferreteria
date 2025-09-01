@@ -19,14 +19,12 @@ export class CategoriasService {
   async create(CreateCategoriaDto: CreateCategoriaDto): Promise<Categoria> {
     const existe = await this.categoriasRepository.findOneBy({
       nombre: CreateCategoriaDto.nombre.trim(),
-      descripcion: CreateCategoriaDto.descripcion.trim(),
     });
 
     if (existe) throw new ConflictException('La categoria ya existe');
 
     const categoria = new Categoria();
     categoria.nombre = CreateCategoriaDto.nombre.trim();
-    categoria.descripcion = CreateCategoriaDto.descripcion.trim();
     return this.categoriasRepository.save(categoria);
   }
 
